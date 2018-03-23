@@ -104,7 +104,6 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Spravochnik_1.pas"/>
-        <DCCReference Include="Unit2.pas"/>
         <DCCReference Include="SplashScreen.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>

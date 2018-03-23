@@ -3,11 +3,11 @@ unit OnCreate;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms,pngimage, Vcl.Dialogs, Vcl.ExtCtrls,
-  SplashScreen, Vcl.StdCtrls, Vcl.Grids;
+   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms,pngimage, Vcl.Dialogs, Vcl.ExtCtrls, SplashScreen, Vcl.StdCtrls, ComObj,  Vcl.Grids;
 
 type
+
   MainList = record
     StoreNum: Integer;
     SectionNum:Integer;
@@ -20,7 +20,9 @@ type
 
   end;
   TForm1 = class(TForm)
+
     strngrd1: TStringGrid;
+    imgSplashIMG: TImage;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -41,11 +43,12 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
 png: TPngImage;
 begin
-png:= TPngImage(introIMG.Picture);
+png:= TPngImage(imgSplashIMG.Picture);
   Splash := TSplash.Create(png);
   Splash.Show(true);
-  Sleep(200);
+  Sleep(2000);
   Splash.Close;
+
 end;
 
 end.
