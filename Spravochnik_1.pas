@@ -519,7 +519,7 @@ var
   f: file of TSectorInfo;
   temp: PSectorList;
 begin
-  AssignFile(f, 'shops.brakh');
+  AssignFile(f, 'sect.brakh');
   rewrite(f);
   temp := head^.adr;
   while temp <> nil do
@@ -535,7 +535,7 @@ var
   f: file of TProductInfo;
   temp: PProductList;
 begin
-  AssignFile(f, 'shops.brakh');
+  AssignFile(f, 'prod.brakh');
   rewrite(f);
   temp := head^.adr;
   while temp <> nil do
