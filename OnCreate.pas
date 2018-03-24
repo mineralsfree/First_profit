@@ -28,12 +28,14 @@ type
     N11: TMenuItem;
     N1: TMenuItem;
     btn1: TButton;
+    N21: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure N11Click(Sender: TObject);
     procedure N1Click(Sender: TObject);
+    procedure N21Click(Sender: TObject);
       private
     { Private declarations }
   public
@@ -121,17 +123,31 @@ mode:=main;
 writeProdList(strngrd1,producthead,shophead,sectorhead);
 end;
 
+procedure TForm1.N21Click(Sender: TObject);
+begin
+ mode:=spr2;
+ writeSectList(strngrd1,sectorhead,shophead);
+end;
+
+{procedure TForm1.N21Click(Sender: TObject);
+begin
+
+end; }
+
 procedure TForm1.strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
    var i,Acol,Arow:Integer;
    var shopNum,sectnum:Integer;
    var sectlistkek:TSectorInfo;
    var shoplistkek:TShopInfo;
+   var prodlistkek:TProductInfo;
    var getShopID:Integer;
    var id: Integer;
+   var id2:string;
 
 begin
   strngrd1.MouseToCell(X,Y,Acol,Arow);
+
     case mode of
      spr1:       //SHOPLIST
       begin
@@ -181,6 +197,7 @@ begin
           5:
             begin
             HehID:=StrToInt(strngrd1.Cells[0,Arow]);
+            mode:=spr2;
             writeSectList(strngrd1,sectorhead,shophead);
             end;
           6:
@@ -188,32 +205,28 @@ begin
               id:=StrToInt(strngrd1.Cells[0,Arow]);
              deleteShopList(shophead,sectorhead,producthead,id);
              writeshopList(strngrd1,shophead);
-
              end;
         end;
-
-
-
-
-
       end;
       spr2:
       begin
         case Acol of
           1:
             begin
+             id:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.tel:=strngrd1.Cells[3,Arow];
              sectlistkek.zav:=strngrd1.Cells[1,Arow];
              sectlistkek.name:=inputbox('','','kek');
-             editSectList(sectorhead,HehID,sectlistkek);
+             editSectList(sectorhead,ID,sectlistkek);
              writeSectList(strngrd1,sectorhead,shophead);
             end;
           2:
             begin
+            id:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.tel:=inputbox('','','37529235232');
              sectlistkek.zav:=strngrd1.Cells[1,Arow];
              sectlistkek.name:=strngrd1.Cells[2,Arow];
-             editSectList(sectorhead,HehID,sectlistkek);
+             editSectList(sectorhead,ID,sectlistkek);
              writeSectList(strngrd1,sectorhead,shophead);
             end;
           4:
@@ -222,8 +235,42 @@ begin
               writeSectList(strngrd1,sectorhead,shophead);
             end;
         end;
-
       end;
+      main:
+        begin
+          case Acol of
+          4:
+            begin
+             id2:=strngrd1.Cells[0,Arow];
+             prodlistkek.shopid:=StrToInt(strngrd1.Cells[2,Arow]);
+             prodlistkek.sectid:=StrToInt(strngrd1.Cells[3,Arow]);
+             prodlistkek.Date:=StrToDate(InputBox('','','12.02.1243'));
+             prodlistkek.VendorCode:=id2;
+             prodlistkek.Name:=strngrd1.Cells[1,Arow];
+             prodlistkek.Count:=StrToInt(strngrd1.Cells[5,Arow]);
+             prodlistkek.Price:=StrToInt(strngrd1.Cells[6,Arow]);
+             editProdList(producthead,id2,prodlistkek);
+            end;
+          5:
+            begin
+              id2:=strngrd1.Cells[0,Arow];
+             prodlistkek.shopid:=StrToInt(strngrd1.Cells[2,Arow]);
+             prodlistkek.sectid:=StrToInt(strngrd1.Cells[3,Arow]);
+             prodlistkek.Date:=StrToInt(strngrd1.Cells[4,Arow]);
+             prodlistkek.VendorCode:=id2;
+             prodlistkek.Name:=strngrd1.Cells[1,Arow];
+             prodlistkek.Count:=StrToInt(inputbox('','','123'));
+             prodlistkek.Price:=StrToInt(strngrd1.Cells[6,Arow]);
+             editProdList(producthead,id2,prodlistkek);
+            end;
+          6:
+            begin
+
+            end;
+
+
+          end;
+        end;
     end;
 end;
 
