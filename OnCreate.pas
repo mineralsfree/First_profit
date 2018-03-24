@@ -101,6 +101,7 @@ png:= TPngImage(imgSplashIMG.Picture);
   createProdHead(producthead);
   createSectHead(sectorhead);
   createShopHead(shophead);
+  mode:=spr1;
 
 end;
 
