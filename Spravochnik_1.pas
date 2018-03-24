@@ -49,19 +49,22 @@ procedure createShopHead(var head: PShopList);
 procedure insertShopList(const head: PShopList; shop: TShopInfo);
 procedure editShopList(const head: PShopList; id: integer; shop:TShopInfo);
 procedure deleteShopList(const head: PShopList; SectHead: PSectorList; ProdHead: PProductList; id: integer);
+procedure writeShopList(Grid:TStringGrid; const head:PShopList);
 
 procedure createSectHead(var head: PSectorList);
 procedure insertSectList(const head: PSectorList; sect: TSectorInfo);
-procedure editSectList(const head: PSectorList; id: integer; sect:TShopInfo);
+procedure editSectList(const head: PSectorList; id: integer; sect:TSectorInfo);
 procedure deleteSectList(const head: PSectorList; ProdHead: PProductList; id: integer);
 procedure deleteSectListKek(const head: PSectorList; ProdHead: PProductList; kek: integer);
+procedure writeSectList(Grid:TStringGrid; const head:PSectorList; ShopAdr:  PShopList);
 
 
 procedure createProdHead(var head: PProductList);
-procedure insertProdList(const head: PProductList; prod: PProductList);
+procedure insertProdList(const head: PProductList; prod: TProductInfo);
 procedure editProdList(const head: PProductList; id: string; prod: TProductInfo);
 procedure deleteProdList(const head: PProductList; id: string);
 procedure deleteProdListKek(const head: PProductList; kek: integer);
+procedure writeProdList(Grid:TStringGrid; const head:PProductList; ShopHead:PShopList; SectHead: PSectorList);
 
 implementation
 
@@ -146,7 +149,7 @@ begin
   end;
 end;
 
-procedure editSectList(const head: PSectorList; id: integer; sect:TShopInfo);
+procedure editSectList(const head: PSectorList; id: integer; sect:TSectorInfo);
 var
   temp: PSectorList;
 begin
@@ -336,7 +339,7 @@ begin
 end;
 
 
-procedure writeSectList(Grid:TStringGrid; const head:PSectorList);
+procedure writeSectList(Grid:TStringGrid; const head:PSectorList; ShopAdr:  PShopList);
 var
   temp:PSectorList;
 begin
@@ -353,7 +356,7 @@ begin
   begin
     Grid.Cells[0,Grid.RowCount - 1] := IntToStr(temp^.Inf.id);
     Grid.Cells[1,Grid.RowCount - 1] := temp^.Inf.name;
-    Grid.Cells[2,Grid.RowCount - 1] := getShopName(temp^.Inf.shopid);
+    Grid.Cells[2,Grid.RowCount - 1] := getShopName(ShopAdr,temp^.Inf.shopid);
     Grid.Cells[3,Grid.RowCount - 1] := temp^.Inf.zav;
     Grid.Cells[4,Grid.RowCount - 1] := temp^.Inf.tel;
     Grid.Cells[5,Grid.RowCount - 1] := 'Delete';
@@ -364,7 +367,7 @@ begin
 end;
 
 
-procedure writeProdList(Grid:TStringGrid; const head:PProductList);
+procedure writeProdList(Grid:TStringGrid; const head:PProductList; ShopHead:PShopList; SectHead: PSectorList);
 var
   temp:PProductList;
 begin
@@ -383,8 +386,8 @@ begin
   begin
     Grid.Cells[0,Grid.RowCount - 1] := temp^.Inf.VendorCode;
     Grid.Cells[1,Grid.RowCount - 1] := temp^.Inf.Name;
-    Grid.Cells[2,Grid.RowCount - 1] := getShopName(temp^.Inf.shopid);
-    Grid.Cells[3,Grid.RowCount - 1] := getSectName(temp^.Inf.sectid);
+    Grid.Cells[2,Grid.RowCount - 1] := getShopName(ShopHead, temp^.Inf.shopid);
+    Grid.Cells[3,Grid.RowCount - 1] := getSectName(SectHead, temp^.Inf.sectid);
     Grid.Cells[4,Grid.RowCount - 1] := DateToStr( temp^.Inf.Date );
     Grid.Cells[5,Grid.RowCount - 1] := IntToStr(temp^.Inf.Count);
     Grid.Cells[6,Grid.RowCount - 1] := CurrToStr(temp^.Inf.Price);
