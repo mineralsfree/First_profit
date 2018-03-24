@@ -10,6 +10,7 @@ object Form1: TForm1
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  Menu = mm1
   OldCreateOrder = False
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -689,13 +690,34 @@ object Form1: TForm1
     Visible = False
   end
   object strngrd1: TStringGrid
-    Left = 8
-    Top = 8
+    Left = 0
+    Top = 32
     Width = 851
     Height = 265
     ColCount = 7
     DefaultColWidth = 120
     RowCount = 2
     TabOrder = 0
+    OnMouseUp = strngrd1MouseUp
+  end
+  object btn1: TButton
+    Left = 746
+    Top = 320
+    Width = 105
+    Height = 44
+    Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1079#1072#1087#1080#1089#1100
+    TabOrder = 1
+    OnClick = btn1Click
+  end
+  object mm1: TMainMenu
+    object N11: TMenuItem
+      Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082'_1'
+    end
+    object N21: TMenuItem
+      Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082'_2'
+    end
+    object N1: TMenuItem
+      Caption = #1054#1089#1085#1086#1074#1085#1086#1081' '#1092#1072#1081#1083
+    end
   end
 end
