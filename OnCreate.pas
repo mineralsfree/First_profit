@@ -49,6 +49,7 @@ var
   shophead:PShopList;
   producthead:PProductList;
   kek:Integer;
+  HehID:Integer;
 
 implementation
 
@@ -109,6 +110,7 @@ end;
 procedure TForm1.N11Click(Sender: TObject);
 begin
  mode:=spr1;
+ writeshopList(strngrd1,shophead);
 end;
 
 
@@ -116,6 +118,7 @@ end;
 procedure TForm1.N1Click(Sender: TObject);
 begin
 mode:=main;
+writeProdList(strngrd1,producthead,shophead,sectorhead);
 end;
 
 procedure TForm1.strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
@@ -140,6 +143,8 @@ begin
              shoplistkek.name:=InputBox('','','kek');
              shoplistkek.adress:=strngrd1.Cells[2,Arow];
              shoplistkek.tel:=strngrd1.Cells[3,Arow];
+             editShopList(shophead,id,shoplistkek);
+             writeshopList(strngrd1,shophead);
             end;
           2:
             begin
@@ -148,6 +153,8 @@ begin
               shoplistkek.name:=strngrd1.Cells[1,Arow];
               shoplistkek.adress:=InputBox('','','privet');
               shoplistkek.tel:=strngrd1.Cells[3,Arow];
+              editShopList(shophead,id,shoplistkek);
+               writeshopList(strngrd1,shophead);
             end;
           3:
             begin
@@ -157,6 +164,7 @@ begin
               shoplistkek.adress:=strngrd1.Cells[2,Arow];
               shoplistkek.tel:=InputBox('','','+375296836944');
               editShopList(shophead,id,shoplistkek);
+              writeshopList(strngrd1,shophead);
             end;
           4:
             begin
@@ -167,16 +175,20 @@ begin
              sectlistkek.name:=InputBox('','','kek');
              sectlistkek.zav:=InputBox('','','privetlivaya');
              sectlistkek.tel:=InputBox('','','37529235232');
+             insertSectList(sectorhead,sectlistkek);
              writeSectList(strngrd1,sectorhead,shophead);
             end;
           5:
             begin
+            HehID:=StrToInt(strngrd1.Cells[0,Arow]);
             writeSectList(strngrd1,sectorhead,shophead);
             end;
           6:
             begin
               id:=StrToInt(strngrd1.Cells[0,Arow]);
              deleteShopList(shophead,sectorhead,producthead,id);
+             writeshopList(strngrd1,shophead);
+
              end;
         end;
 
@@ -190,23 +202,24 @@ begin
         case Acol of
           1:
             begin
-
              sectlistkek.tel:=strngrd1.Cells[3,Arow];
              sectlistkek.zav:=strngrd1.Cells[1,Arow];
              sectlistkek.name:=inputbox('','','kek');
+             editSectList(sectorhead,HehID,sectlistkek);
+             writeSectList(strngrd1,sectorhead,shophead);
             end;
           2:
             begin
              sectlistkek.tel:=inputbox('','','37529235232');
              sectlistkek.zav:=strngrd1.Cells[1,Arow];
              sectlistkek.name:=strngrd1.Cells[2,Arow];
-             //editShopList()
-
+             editSectList(sectorhead,HehID,sectlistkek);
+             writeSectList(strngrd1,sectorhead,shophead);
             end;
           4:
             begin
-             sectNum:=StrToInt(strngrd1.Cells[1,Arow]);
-             //deleteSectNum(head,sectNum);
+              deleteSectList(sectorhead,producthead,HehID);
+              writeSectList(strngrd1,sectorhead,shophead);
             end;
         end;
 
