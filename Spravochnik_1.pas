@@ -53,6 +53,7 @@ procedure editShopList(const head: PShopList; id: integer; shop:TShopInfo);
 procedure deleteShopList(const head: PShopList; SectHead: PSectorList; ProdHead: PProductList; id: integer);
 procedure writeShopList(Grid:TStringGrid; const head:PShopList);
 function isShopIDFound(head: PShopList; id: integer):boolean;
+procedure saveShopList(head:PShopList);
 
 procedure createSectHead(var head: PSectorList);
 procedure insertSectList(const head: PSectorList; sect: TSectorInfo);
@@ -61,6 +62,7 @@ procedure deleteSectList(const head: PSectorList; ProdHead: PProductList; id: in
 procedure deleteSectListKek(const head: PSectorList; ProdHead: PProductList; kek: integer);
 procedure writeSectList(Grid:TStringGrid; const head:PSectorList; ShopAdr:  PShopList);
 function isSectIDFound(head: PSectorList; id: integer):boolean;
+procedure saveSectList(head:PSectorList);
 
 procedure createProdHead(var head: PProductList);
 procedure insertProdList(const head: PProductList; prod: TProductInfo);
@@ -69,7 +71,7 @@ procedure deleteProdList(const head: PProductList; id: string);
 procedure deleteProdListKek(const head: PProductList; kek: integer);
 procedure writeProdList(Grid:TStringGrid; const head:PProductList; ShopHead:PShopList; SectHead: PSectorList);
 procedure sortProdList(const head:PProductList; kek: TSortMode);
-
+procedure saveProdList(head:PProductList);
 
 function ShopIDsort (r1, r2: TProductInfo): Boolean;
 function SectIDsort (r1, r2: TProductInfo): Boolean;
