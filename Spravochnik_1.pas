@@ -45,6 +45,8 @@ ProductList = record
   Adr: PProductList;
 end;
 
+TSortMode = function(r1, r2: TProductInfo): Boolean;
+
 procedure createShopHead(var head: PShopList);
 procedure insertShopList(const head: PShopList; shop: TShopInfo);
 procedure editShopList(const head: PShopList; id: integer; shop:TShopInfo);
@@ -65,6 +67,13 @@ procedure editProdList(const head: PProductList; id: string; prod: TProductInfo)
 procedure deleteProdList(const head: PProductList; id: string);
 procedure deleteProdListKek(const head: PProductList; kek: integer);
 procedure writeProdList(Grid:TStringGrid; const head:PProductList; ShopHead:PShopList; SectHead: PSectorList);
+procedure sortProdList(const head:PProductList; kek: TSortMode);
+
+
+function ShopIDsort (r1, r2: TProductInfo): Boolean;
+function SectIDsort (r1, r2: TProductInfo): Boolean;
+function ArtIDsort (r1, r2: TProductInfo): Boolean;
+
 
 implementation
 
@@ -397,6 +406,54 @@ begin
     Grid.RowCount := Grid.RowCount + 1;
   end;
   Grid.RowCount := Grid.RowCount - 1;
+end;
+
+function ShopIDsort (r1, r2: TProductInfo): Boolean;
+begin
+   Result:= r1.shopid > r2.shopid;
+end;
+
+function SectIDsort (r1, r2: TProductInfo): Boolean;
+begin
+   Result:= r1.sectid > r2.sectid;
+end;
+
+function ArtIDsort (r1, r2: TProductInfo): Boolean;
+begin
+   Result:= r1.VendorCode > r2.VendorCode;
+end;
+
+procedure sortProdList(const head:PProductList; kek: TSortMode);
+var
+  i:integer;
+  temp: PProductList;
+  temp2: PProductList;
+  t1:PProductList;
+begin
+  temp := head;
+  while temp.adr <> nil do
+  begin
+    temp2 := temp.adr;
+    while temp2.adr <> nil do
+    begin
+      if (kek(temp2^.Adr^.inf, temp^.Adr^.inf)) then
+      //
+      begin
+
+        t1 := temp2^.adr;
+        temp2^.adr := temp^.adr;
+        temp^.adr := t1;
+
+        t1 := temp^.adr^.adr;
+        temp^.adr^.adr := temp2^.adr.adr;
+        temp2^.adr^.adr := t1;
+
+        temp2 := temp;
+      end;
+      temp2 := temp2^.adr;
+    end;
+    temp := temp^.adr;
+  end;
 end;
 end.
 
