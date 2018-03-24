@@ -79,7 +79,7 @@ case mode of
       prodlistkek.VendorCode:=InputBox('','','kek');
       prodlistkek.Name:=InputBox('','','kek');
       prodlistkek.Count:=StrToInt(InputBox('','','2'));
-      prodlistkek.Price:=StrToCurr(InputBox('','','22.8'));
+      prodlistkek.Price:=StrToCurr(InputBox('','','22,8'));
       insertProdList(producthead,prodlistkek);
       writeProdList(strngrd1,producthead,shophead,sectorhead);
 
@@ -128,6 +128,7 @@ procedure TForm1.strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
    var id: Integer;
 
 begin
+  strngrd1.MouseToCell(X,Y,Acol,Arow);
     case mode of
      spr1:       //SHOPLIST
       begin
@@ -170,12 +171,12 @@ begin
             end;
           5:
             begin
-
+            writeSectList(strngrd1,sectorhead,shophead);
             end;
           6:
             begin
-             shopNum:=StrToInt(strngrd1.Cells[1,Arow]);
-             //deleteShopNum(head,shopNum);
+              id:=StrToInt(strngrd1.Cells[0,Arow]);
+             deleteShopList(shophead,sectorhead,producthead,id);
              end;
         end;
 
