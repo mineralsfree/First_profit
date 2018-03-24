@@ -168,15 +168,15 @@ begin
             end;
           4:
             begin
-             mode:=spr2;
+             //mode:=spr2;
               id:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.id:=id;
              sectlistkek.shopid:=StrToInt(strngrd1.Cells[0,Arow]);
-             sectlistkek.name:=InputBox('','','kek');
+             sectlistkek.name:=InputBox('','','lol');
              sectlistkek.zav:=InputBox('','','privetlivaya');
              sectlistkek.tel:=InputBox('','','37529235232');
              insertSectList(sectorhead,sectlistkek);
-             writeSectList(strngrd1,sectorhead,shophead);
+             //writeSectList(strngrd1,sectorhead,shophead);
             end;
           5:
             begin
