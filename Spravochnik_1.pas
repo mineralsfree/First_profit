@@ -52,6 +52,7 @@ procedure insertShopList(const head: PShopList; shop: TShopInfo);
 procedure editShopList(const head: PShopList; id: integer; shop:TShopInfo);
 procedure deleteShopList(const head: PShopList; SectHead: PSectorList; ProdHead: PProductList; id: integer);
 procedure writeShopList(Grid:TStringGrid; const head:PShopList);
+function isShopIDFound(head: PShopList; id: integer):boolean;
 
 procedure createSectHead(var head: PSectorList);
 procedure insertSectList(const head: PSectorList; sect: TSectorInfo);
@@ -59,7 +60,7 @@ procedure editSectList(const head: PSectorList; id: integer; sect:TSectorInfo);
 procedure deleteSectList(const head: PSectorList; ProdHead: PProductList; id: integer);
 procedure deleteSectListKek(const head: PSectorList; ProdHead: PProductList; kek: integer);
 procedure writeSectList(Grid:TStringGrid; const head:PSectorList; ShopAdr:  PShopList);
-
+function isSectIDFound(head: PSectorList; id: integer):boolean;
 
 procedure createProdHead(var head: PProductList);
 procedure insertProdList(const head: PProductList; prod: TProductInfo);
@@ -459,5 +460,45 @@ begin
     temp := temp^.adr;
   end;
 end;
+
+
+function isShopIDFound(head: PShopList; id: integer):boolean;
+var
+  tmp: PShopList;
+begin
+  tmp:= head;
+  while tmp <> nil do
+  begin
+    if tmp^.Inf.id = id then
+    begin
+      Result:= true;
+      exit;
+    end;
+
+    tmp:= tmp^.Adr;
+  end;
+  result:= false;
+end;
+
+function isSectIDFound(head: PSectorList; id: integer):boolean;
+var
+  tmp: PSectorList;
+begin
+  tmp:= head;
+  while tmp <> nil do
+  begin
+    if tmp^.Inf.id = id then
+    begin
+      Result:= true;
+      exit;
+    end;
+
+    tmp:= tmp^.Adr;
+  end;
+  result:= false;
+end;
+
+
+
 end.
 
