@@ -712,12 +712,11 @@ object Form1: TForm1
   object mm1: TMainMenu
     object N11: TMenuItem
       Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082'_1'
-    end
-    object N21: TMenuItem
-      Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082'_2'
+      OnClick = N11Click
     end
     object N1: TMenuItem
       Caption = #1054#1089#1085#1086#1074#1085#1086#1081' '#1092#1072#1081#1083
+      OnClick = N1Click
     end
   end
 end

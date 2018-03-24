@@ -26,13 +26,14 @@ type
     imgSplashIMG: TImage;
     mm1: TMainMenu;
     N11: TMenuItem;
-    N21: TMenuItem;
     N1: TMenuItem;
     btn1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure N11Click(Sender: TObject);
+    procedure N1Click(Sender: TObject);
       private
     { Private declarations }
   public
@@ -47,6 +48,7 @@ var
   sectorhead:PSectorList;
   shophead:PShopList;
   producthead:PProductList;
+  kek:Integer;
 
 implementation
 
@@ -61,12 +63,13 @@ case mode of
 
   spr1:
     begin
-         shoplistkek.id:=StrToInt(InputBox('','','12'));
+         shoplistkek.id:=kek;
          shoplistkek.name:=InputBox('','','kek');
          shoplistkek.adress:=InputBox('','','privetlivaya');
          shoplistkek.tel:=InputBox('','','37529235232');
          insertShopList(shophead,shoplistkek);
          writeShopList(strngrd1,shophead);
+         inc(kek);
     end;
   main:
     begin
@@ -89,6 +92,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
 png: TPngImage;
 begin
+  kek:=0;
 png:= TPngImage(imgSplashIMG.Picture);
   Splash := TSplash.Create(png);
   Splash.Show(true);
@@ -100,6 +104,18 @@ png:= TPngImage(imgSplashIMG.Picture);
 
 end;
 
+
+procedure TForm1.N11Click(Sender: TObject);
+begin
+ mode:=spr1;
+end;
+
+
+
+procedure TForm1.N1Click(Sender: TObject);
+begin
+mode:=main;
+end;
 
 procedure TForm1.strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
@@ -142,7 +158,14 @@ begin
             end;
           4:
             begin
-
+             mode:=spr2;
+              id:=StrToInt(strngrd1.Cells[0,Arow]);
+             sectlistkek.id:=id;
+             sectlistkek.shopid:=StrToInt(strngrd1.Cells[0,Arow]);
+             sectlistkek.name:=InputBox('','','kek');
+             sectlistkek.zav:=InputBox('','','privetlivaya');
+             sectlistkek.tel:=InputBox('','','37529235232');
+             writeSectList(strngrd1,sectorhead,shophead);
             end;
           5:
             begin
@@ -155,13 +178,8 @@ begin
              end;
         end;
 
-          mode:=spr2;
-         sectlistkek.id:=Random(10);
-         sectlistkek.shopid:=StrToInt(strngrd1.Cells[0,Arow]);
-         sectlistkek.name:=InputBox('','','kek');
-         sectlistkek.zav:=InputBox('','','privetlivaya');
-         sectlistkek.tel:=InputBox('','','37529235232');
-         //Отрисовать второй справочник
+
+
 
 
       end;
