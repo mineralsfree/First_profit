@@ -2,7 +2,7 @@ unit Spravochnik_1;
 
 interface
 uses
-  SysUtils;
+  SysUtils, Vcl.Grids;
 
 type
 TShopInfo = record
@@ -113,7 +113,7 @@ begin
   temp^.Inf := sect;
 end;
 
-procedure insertProdList(const head: PProductList; prod: PProductList);
+procedure insertProdList(const head: PProductList; prod: TProductInfo);
 var
   temp:PProductList;
 begin
@@ -276,5 +276,124 @@ begin
   end;
 end;
 
+function getShopName(head: PShopList; id: integer):string;
+var
+  tmp: PShopList;
+begin
+  tmp:= head;
+  while tmp <> nil do
+  begin
+    if tmp^.Inf.id = id then
+    begin
+      Result:= tmp^.Inf.name;
+      exit;
+    end;
+
+    tmp:= tmp^.Adr;
+  end;
+end;
+
+function getSectName(head: PSectorList; id: integer):string;
+var
+  tmp: PSectorList;
+begin
+  tmp:= head;
+  while tmp <> nil do
+  begin
+    if tmp^.Inf.id = id then
+    begin
+      Result:= tmp^.Inf.name;
+      exit;
+    end;
+
+    tmp:= tmp^.Adr;
+  end;
+end;
+
+procedure writeShopList(Grid:TStringGrid; const head:PShopList);
+var
+  temp:PShopList;
+begin
+  Grid.ColCount := 5;
+  Grid.RowCount := 2;
+  Grid.Cells[0,0] := 'ID';
+  Grid.Cells[1,0] := 'Name';
+  Grid.Cells[2,0] := 'Adress';
+  Grid.Cells[3,0] := 'Tel. number';
+  //ShowMessage('kek');
+  temp := head^.adr;
+  while temp <> nil do
+  begin
+    Grid.Cells[0,Grid.RowCount - 1] := IntToStr(temp^.Inf.id);
+    Grid.Cells[1,Grid.RowCount - 1] := temp^.Inf.name;
+    Grid.Cells[2,Grid.RowCount - 1] := temp^.Inf.adress;
+    Grid.Cells[3,Grid.RowCount - 1] := temp^.Inf.tel;
+    Grid.Cells[4,Grid.RowCount - 1] := 'Delete';
+    temp:=temp^.adr;
+    Grid.RowCount := Grid.RowCount + 1;
+  end;
+  Grid.RowCount := Grid.RowCount - 1;
+end;
+
+
+procedure writeSectList(Grid:TStringGrid; const head:PSectorList);
+var
+  temp:PSectorList;
+begin
+  Grid.ColCount := 6;
+  Grid.RowCount := 2;
+  Grid.Cells[0,0] := 'ID';
+  Grid.Cells[1,0] := 'Name';
+  Grid.Cells[2,0] := 'Shop Name';
+  Grid.Cells[3,0] := 'Zav';
+  Grid.Cells[4,0] := 'Tel. number';
+  //ShowMessage('kek');
+  temp := head^.adr;
+  while temp <> nil do
+  begin
+    Grid.Cells[0,Grid.RowCount - 1] := IntToStr(temp^.Inf.id);
+    Grid.Cells[1,Grid.RowCount - 1] := temp^.Inf.name;
+    Grid.Cells[2,Grid.RowCount - 1] := getShopName(temp^.Inf.shopid);
+    Grid.Cells[3,Grid.RowCount - 1] := temp^.Inf.zav;
+    Grid.Cells[4,Grid.RowCount - 1] := temp^.Inf.tel;
+    Grid.Cells[5,Grid.RowCount - 1] := 'Delete';
+    temp:=temp^.adr;
+    Grid.RowCount := Grid.RowCount + 1;
+  end;
+  Grid.RowCount := Grid.RowCount - 1;
+end;
+
+
+procedure writeProdList(Grid:TStringGrid; const head:PProductList);
+var
+  temp:PProductList;
+begin
+  Grid.ColCount := 8;
+  Grid.RowCount := 2;
+  Grid.Cells[0,0] := 'Vendor';
+  Grid.Cells[1,0] := 'Name';
+  Grid.Cells[2,0] := 'Shop Name';
+  Grid.Cells[3,0] := 'Sector Name';
+  Grid.Cells[4,0] := 'Date';
+  Grid.Cells[5,0] := 'Count';
+  Grid.Cells[6,0] := 'Currency';
+  //ShowMessage('kek');
+  temp := head^.adr;
+  while temp <> nil do
+  begin
+    Grid.Cells[0,Grid.RowCount - 1] := temp^.Inf.VendorCode;
+    Grid.Cells[1,Grid.RowCount - 1] := temp^.Inf.Name;
+    Grid.Cells[2,Grid.RowCount - 1] := getShopName(temp^.Inf.shopid);
+    Grid.Cells[3,Grid.RowCount - 1] := getSectName(temp^.Inf.sectid);
+    Grid.Cells[4,Grid.RowCount - 1] := DateToStr( temp^.Inf.Date );
+    Grid.Cells[5,Grid.RowCount - 1] := IntToStr(temp^.Inf.Count);
+    Grid.Cells[6,Grid.RowCount - 1] := CurrToStr(temp^.Inf.Price);
+
+    Grid.Cells[7,Grid.RowCount - 1] := 'Delete';
+    temp:=temp^.adr;
+    Grid.RowCount := Grid.RowCount + 1;
+  end;
+  Grid.RowCount := Grid.RowCount - 1;
+end;
 end.
 
