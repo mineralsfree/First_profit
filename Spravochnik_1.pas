@@ -45,6 +45,24 @@ ProductList = record
   Adr: PProductList;
 end;
 
+procedure createShopHead(var head: PShopList);
+procedure insertShopList(const head: PShopList; shop: TShopInfo);
+procedure editShopList(const head: PShopList; id: integer; shop:TShopInfo);
+procedure deleteShopList(const head: PShopList; SectHead: PSectorList; ProdHead: PProductList; id: integer);
+
+procedure createSectHead(var head: PSectorList);
+procedure insertSectList(const head: PSectorList; sect: TSectorInfo);
+procedure editSectList(const head: PSectorList; id: integer; sect:TShopInfo);
+procedure deleteSectList(const head: PSectorList; ProdHead: PProductList; id: integer);
+procedure deleteSectListKek(const head: PSectorList; ProdHead: PProductList; kek: integer);
+
+
+procedure createProdHead(var head: PProductList);
+procedure insertProdList(const head: PProductList; prod: PProductList);
+procedure editProdList(const head: PProductList; id: string; prod: TProductInfo);
+procedure deleteProdList(const head: PProductList; id: string);
+procedure deleteProdListKek(const head: PProductList; kek: integer);
+
 implementation
 
 procedure createShopHead(var head: PShopList);
@@ -146,5 +164,117 @@ begin
   end;
 end;
 
+procedure editProdList(const head: PProductList; id: string; prod: TProductInfo);
+var
+  temp: PProductList;
+begin
+  temp:= head;
+  while (temp <> nil)do
+  begin
+    if temp^.Inf.VendorCode = id then
+    begin
+      temp^.Inf := prod;
+      temp^.Inf.VendorCode := id;
+      exit;
+    end;
+    temp := temp^.Adr;
+  end;
+end;
+
+procedure deleteProdList(const head: PProductList; id: string);
+var
+  temp,temp2:PProductList;
+begin
+  temp := head;
+  while temp^.adr <> nil do
+  begin
+    temp2 := temp^.adr;
+    if temp2^.Inf.VendorCode = id then
+    begin
+      temp^.adr := temp2^.adr;
+      dispose(temp2);
+    end
+    else
+      temp:= temp^.adr;
+  end;
+end;
+
+procedure deleteProdListKek(const head: PProductList; kek: integer);
+var
+  temp,temp2:PProductList;
+begin
+  temp := head;
+  while temp^.adr <> nil do
+  begin
+    temp2 := temp^.adr;
+    if temp2^.Inf.sectid = kek then
+    begin
+      temp^.adr := temp2^.adr;
+      dispose(temp2);
+    end
+    else
+      temp:= temp^.adr;
+  end;
+end;
+
+
+
+procedure deleteSectList(const head: PSectorList; ProdHead: PProductList; id: integer);
+var
+  temp,temp2:PSectorList;
+begin
+  deleteProdListKek(ProdHead, id);
+  temp := head;
+  while temp^.adr <> nil do
+  begin
+    temp2 := temp^.adr;
+    if temp2^.Inf.id = id then
+    begin
+      temp^.adr := temp2^.adr;
+      dispose(temp2);
+    end
+    else
+      temp:= temp^.adr;
+  end;
+end;
+
+procedure deleteSectListKek(const head: PSectorList; ProdHead: PProductList; kek: integer);
+var
+  temp,temp2:PSectorList;
+begin
+  temp := head;
+  while temp^.adr <> nil do
+  begin
+    temp2 := temp^.adr;
+    if temp2^.Inf.shopid = kek then
+    begin
+      deleteProdListKek(ProdHead, temp2^.Inf.id);
+      temp^.adr := temp2^.adr;
+      dispose(temp2);
+    end
+    else
+      temp:= temp^.adr;
+  end;
+end;
+
+procedure deleteShopList(const head: PShopList; SectHead: PSectorList; ProdHead: PProductList; id: integer);
+var
+  temp,temp2:PShopList;
+begin
+  deleteSectListKek(SectHead, ProdHead, id);
+  temp := head;
+  while temp^.adr <> nil do
+  begin
+    temp2 := temp^.adr;
+    if temp2^.Inf.id = id then
+    begin
+      temp^.adr := temp2^.adr;
+      dispose(temp2);
+    end
+    else
+      temp:= temp^.adr;
+  end;
+end;
 
 end.
+
