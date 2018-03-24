@@ -54,6 +54,7 @@ procedure deleteShopList(const head: PShopList; SectHead: PSectorList; ProdHead:
 procedure writeShopList(Grid:TStringGrid; const head:PShopList);
 function isShopIDFound(head: PShopList; id: integer):boolean;
 procedure saveShopList(head:PShopList);
+procedure readShopFile(const head:PShopList);
 
 procedure createSectHead(var head: PSectorList);
 procedure insertSectList(const head: PSectorList; sect: TSectorInfo);
@@ -63,6 +64,7 @@ procedure deleteSectListKek(const head: PSectorList; ProdHead: PProductList; kek
 procedure writeSectList(Grid:TStringGrid; const head:PSectorList; ShopAdr:  PShopList);
 function isSectIDFound(head: PSectorList; id: integer):boolean;
 procedure saveSectList(head:PSectorList);
+procedure readSectFile(const head:PSectorList);
 
 procedure createProdHead(var head: PProductList);
 procedure insertProdList(const head: PProductList; prod: TProductInfo);
@@ -72,6 +74,7 @@ procedure deleteProdListKek(const head: PProductList; kek: integer);
 procedure writeProdList(Grid:TStringGrid; const head:PProductList; ShopHead:PShopList; SectHead: PSectorList);
 procedure sortProdList(const head:PProductList; kek: TSortMode);
 procedure saveProdList(head:PProductList);
+procedure readProdFile(const head:PProductList);
 
 function ShopIDsort (r1, r2: TProductInfo): Boolean;
 function SectIDsort (r1, r2: TProductInfo): Boolean;
@@ -548,6 +551,103 @@ begin
   close(F);
 end;
 
+procedure readShopFile(const head:PShopList);
+var
+  f: file of TShopInfo;
+  OTemp: PShopList;
+  filename: string;
+begin
+  filename := 'shops.brakh';
+  AssignFile(f, filename);
+  if fileExists(Filename) then
+  begin
+    Reset(f);
+    OTemp := Head;
+    head^.Adr := nil;
+    while not EOF(f) do
+    begin
+      new(OTemp^.adr);
+      OTemp:=OTemp^.adr;
+      OTemp^.adr:=nil;
+
+      read(f, OTemp^.Inf);
+
+    end;
+    close(f);
+  end
+  else
+  begin
+    Rewrite(f);
+    close(f);
+  end;
+
+end;
+
+
+procedure readSectFile(const head:PSectorList);
+var
+  f: file of TSectorInfo;
+  OTemp: PSectorList;
+  filename: string;
+begin
+  filename := 'sect.brakh';
+  AssignFile(f, filename);
+  if fileExists(Filename) then
+  begin
+    Reset(f);
+    OTemp := Head;
+    head^.Adr := nil;
+    while not EOF(f) do
+    begin
+      new(OTemp^.adr);
+      OTemp:=OTemp^.adr;
+      OTemp^.adr:=nil;
+
+      read(f, OTemp^.Inf);
+
+    end;
+    close(f);
+  end
+  else
+  begin
+    Rewrite(f);
+    close(f);
+  end;
+
+end;
+
+procedure readProdFile(const head:PProductList);
+var
+  f: file of TProductInfo;
+  OTemp: PProductList;
+  filename: string;
+begin
+  filename := 'prod.brakh';
+  AssignFile(f, filename);
+  if fileExists(Filename) then
+  begin
+    Reset(f);
+    OTemp := Head;
+    head^.Adr := nil;
+    while not EOF(f) do
+    begin
+      new(OTemp^.adr);
+      OTemp:=OTemp^.adr;
+      OTemp^.adr:=nil;
+
+      read(f, OTemp^.Inf);
+
+    end;
+    close(f);
+  end
+  else
+  begin
+    Rewrite(f);
+    close(f);
+  end;
+
+end;
 
 end.
+
 
