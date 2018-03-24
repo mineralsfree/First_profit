@@ -66,7 +66,7 @@ case mode of
          shoplistkek.adress:=InputBox('','','privetlivaya');
          shoplistkek.tel:=InputBox('','','37529235232');
          insertShopList(shophead,shoplistkek);
-        //отрисовать
+         writeShopList(strngrd1,shophead);
     end;
   main:
     begin
@@ -78,7 +78,8 @@ case mode of
       prodlistkek.Count:=StrToInt(InputBox('','','2'));
       prodlistkek.Price:=StrToCurr(InputBox('','','22.8'));
       insertProdList(producthead,prodlistkek);
-      //отрисовать
+      writeProdList(strngrd1,producthead,shophead,sectorhead);
+
     end;
 
 end;
