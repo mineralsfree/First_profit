@@ -498,6 +498,53 @@ begin
   result:= false;
 end;
 
+procedure saveShopList(head:PShopList);
+var
+  f: file of TShopInfo;
+  temp: PShopList;
+begin
+  AssignFile(f, 'shops.brakh');
+  rewrite(f);
+  temp := head^.adr;
+  while temp <> nil do
+  begin
+    write(f, temp^.Inf);
+    temp:=temp^.adr;
+  end;
+  close(F);
+end;
+
+procedure saveSectList(head:PSectorList);
+var
+  f: file of TSectorInfo;
+  temp: PSectorList;
+begin
+  AssignFile(f, 'shops.brakh');
+  rewrite(f);
+  temp := head^.adr;
+  while temp <> nil do
+  begin
+    write(f, temp^.Inf);
+    temp:=temp^.adr;
+  end;
+  close(F);
+end;
+
+procedure saveProdList(head:PProductList);
+var
+  f: file of TProductInfo;
+  temp: PProductList;
+begin
+  AssignFile(f, 'shops.brakh');
+  rewrite(f);
+  temp := head^.adr;
+  while temp <> nil do
+  begin
+    write(f, temp^.Inf);
+    temp:=temp^.adr;
+  end;
+  close(F);
+end;
 
 
 end.
