@@ -259,6 +259,7 @@ begin
              id:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.tel:=strngrd1.Cells[3,Arow];
              sectlistkek.zav:=strngrd1.Cells[1,Arow];
+
              sectlistkek.name:=inputbox('','','kek');
              editSectList(sectorhead,ID,sectlistkek);
              writeSectList(strngrd1,sectorhead,shophead);
@@ -274,6 +275,10 @@ begin
             end;
           4:
             begin
+
+            end;
+          5:
+            begin
               id:=StrToInt(strngrd1.Cells[0,Arow]);
               deleteSectList(sectorhead,producthead,ID);
               writeSectList(strngrd1,sectorhead,shophead);
@@ -288,7 +293,16 @@ begin
              id2:=strngrd1.Cells[0,Arow];
              prodlistkek.shopid:=StrToInt(strngrd1.Cells[2,Arow]);
              prodlistkek.sectid:=StrToInt(strngrd1.Cells[3,Arow]);
-             prodlistkek.Date:=StrToDate(InputBox('','','12.02.1243'));
+             //MyClass := TComponent.Create(Self);
+             try
+              prodlistkek.Date:=StrToDate(InputBox('','','12.02.1243'));
+              except
+              on E:Exception do
+              ShowMessage('Wrong input');
+             //finally
+              // MyClass.Free;
+             end;
+            // prodlistkek.Date:=StrToDate(InputBox('','','12.02.1243'));
              prodlistkek.VendorCode:=id2;
              prodlistkek.Name:=strngrd1.Cells[1,Arow];
              prodlistkek.Count:=StrToInt(strngrd1.Cells[5,Arow]);
