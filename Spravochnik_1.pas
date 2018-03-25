@@ -75,6 +75,7 @@ procedure writeProdList(Grid:TStringGrid; const head:PProductList; ShopHead:PSho
 procedure sortProdList(const head:PProductList; kek: TSortMode);
 procedure saveProdList(head:PProductList);
 procedure readProdFile(const head:PProductList);
+function isProdIDFound(head: PProductList; id: string):boolean;
 
 function ShopIDsort (r1, r2: TProductInfo): Boolean;
 function SectIDsort (r1, r2: TProductInfo): Boolean;
@@ -493,6 +494,24 @@ begin
   while tmp <> nil do
   begin
     if tmp^.Inf.id = id then
+    begin
+      Result:= true;
+      exit;
+    end;
+
+    tmp:= tmp^.Adr;
+  end;
+  result:= false;
+end;
+
+function isProdIDFound(head: PProductList; id: string):boolean;
+var
+  tmp: PProductList;
+begin
+  tmp:= head;
+  while tmp <> nil do
+  begin
+    if tmp^.Inf.VendorCode = id then
     begin
       Result:= true;
       exit;
