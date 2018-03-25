@@ -55,6 +55,7 @@ procedure writeShopList(Grid:TStringGrid; const head:PShopList);
 function isShopIDFound(head: PShopList; id: integer):boolean;
 procedure saveShopList(head:PShopList);
 function readShopFile(const head:PShopList):integer;
+function getShopName(head: PShopList; id: integer):string;
 
 procedure createSectHead(var head: PSectorList);
 procedure insertSectList(const head: PSectorList; sect: TSectorInfo);
@@ -65,6 +66,7 @@ procedure writeSectList(Grid:TStringGrid; const head:PSectorList; ShopAdr:  PSho
 function isSectIDFound(head: PSectorList; id: integer):boolean;
 procedure saveSectList(head:PSectorList);
 function readSectFile(const head:PSectorList):integer;
+function getSectName(head: PSectorList; id: integer):string;
 
 procedure createProdHead(var head: PProductList);
 procedure insertProdList(const head: PProductList; prod: TProductInfo);
@@ -576,6 +578,7 @@ var
   OTemp: PShopList;
   filename: string;
 begin
+  Result := 1;
   filename := 'shops.brakh';
   AssignFile(f, filename);
   if fileExists(Filename) then
@@ -609,6 +612,7 @@ var
   OTemp: PSectorList;
   filename: string;
 begin
+  Result := 1;
   filename := 'sect.brakh';
   AssignFile(f, filename);
   if fileExists(Filename) then
