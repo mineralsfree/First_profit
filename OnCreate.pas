@@ -78,15 +78,20 @@ case mode of
     end;
   main:
     begin
-      //prodlistkek.shopid:=ComboBox;
-      //prodlistkek.sectid:=ComboBox;
+      prodlistkek.shopid:=StrToInt(InputBox('','','kek'));
+      prodlistkek.sectid:=StrToInt(InputBox('','','kek'));
       prodlistkek.Date:=StrToDate(InputBox('','','12.08.1488'));
       prodlistkek.VendorCode:=InputBox('','','kek');
       prodlistkek.Name:=InputBox('','','kek');
       prodlistkek.Count:=StrToInt(InputBox('','','2'));
       prodlistkek.Price:=StrToCurr(InputBox('','','22,8'));
       insertProdList(producthead,prodlistkek);
-      writeProdList(strngrd1,producthead,shophead,sectorhead);
+      if isShopIDFound(shophead,prodlistkek.shopid)
+      and isSectIDFound(sectorhead,prodlistkek.sectid) then
+
+      writeProdList(strngrd1,producthead,shophead,sectorhead)
+      else
+        ShowMessage('sector or shop do not exsist');
 
     end;
 
@@ -101,7 +106,7 @@ begin
 png:= TPngImage(imgSplashIMG.Picture);
   Splash := TSplash.Create(png);
   Splash.Show(true);
-  Sleep(2000);
+  Sleep(200);
   Splash.Close;
   createProdHead(producthead);
   createSectHead(sectorhead);
@@ -120,6 +125,7 @@ procedure TForm1.N11Click(Sender: TObject);
 begin
  mode:=spr1;
  writeshopList(strngrd1,shophead);
+ btn1.Visible:=true;
 end;
 
 
@@ -128,20 +134,35 @@ procedure TForm1.N1Click(Sender: TObject);
 begin
 mode:=main;
 writeProdList(strngrd1,producthead,shophead,sectorhead);
+btn1.Visible:=true;
 end;
 
 procedure TForm1.N21Click(Sender: TObject);
 begin
  mode:=spr2;
  writeSectList(strngrd1,sectorhead,shophead);
+ btn1.Visible:=False;
 end;
 
 procedure TForm1.Save1Click(Sender: TObject);
 begin
 case mode of
-  spr1: saveShopList(shophead);
-  spr2: saveSectList(sectorhead);
-  main: saveProdList(producthead);
+  spr1: begin
+         saveShopList(shophead);
+        ShowMessage('shoplist saved');
+        end;
+        spr2:
+        begin
+          saveSectList(sectorhead);
+          ShowMessage('sectorlist saved');
+        end;
+
+  main:
+    begin
+     saveProdList(producthead);
+     ShowMessage('productlist saved');
+    end;
+
 end;
 end;
 
