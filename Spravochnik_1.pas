@@ -338,8 +338,8 @@ begin
   Grid.Cells[0,0] := 'ID';
   Grid.Cells[1,0] := 'Name';
   Grid.Cells[2,0] := 'Adress';
-  Grid.Cells[4,0] := 'add';
-  Grid.Cells[5,0] := 'Delete';
+  Grid.Cells[3,0] := 'add';
+  Grid.Cells[4,0] := 'Delete';
  // Grid.Cells[6,0] := 'Delete';
   //ShowMessage('kek');
   temp := head^.adr;

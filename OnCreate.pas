@@ -184,6 +184,9 @@ procedure TForm1.strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
 
 begin
   strngrd1.MouseToCell(X,Y,Acol,Arow);
+  if Arow<>0 then
+  begin
+
 
     case mode of
      spr1:       //SHOPLIST
@@ -315,6 +318,7 @@ begin
           end;
         end;
     end;
+  end;
 end;
 
 end.
