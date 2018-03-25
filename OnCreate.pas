@@ -29,6 +29,7 @@ type
     N1: TMenuItem;
     btn1: TButton;
     N21: TMenuItem;
+    Save1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
@@ -36,6 +37,7 @@ type
     procedure N11Click(Sender: TObject);
     procedure N1Click(Sender: TObject);
     procedure N21Click(Sender: TObject);
+    procedure Save1Click(Sender: TObject);
       private
     { Private declarations }
   public
@@ -104,7 +106,12 @@ png:= TPngImage(imgSplashIMG.Picture);
   createProdHead(producthead);
   createSectHead(sectorhead);
   createShopHead(shophead);
-  mode:=spr1;
+  mode:=main;
+  readShopFile(shophead);
+  readSectFile(sectorhead);
+  readProdFile(producthead);
+  writeProdList(strngrd1,producthead,shophead,sectorhead);
+
 
 end;
 
@@ -127,6 +134,15 @@ procedure TForm1.N21Click(Sender: TObject);
 begin
  mode:=spr2;
  writeSectList(strngrd1,sectorhead,shophead);
+end;
+
+procedure TForm1.Save1Click(Sender: TObject);
+begin
+case mode of
+  spr1: saveShopList(shophead);
+  spr2: saveSectList(sectorhead);
+  main: saveProdList(producthead);
+end;
 end;
 
 {procedure TForm1.N21Click(Sender: TObject);

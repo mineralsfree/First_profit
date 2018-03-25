@@ -722,5 +722,9 @@ object Form1: TForm1
       Caption = #1054#1089#1085#1086#1074#1085#1086#1081' '#1092#1072#1081#1083
       OnClick = N1Click
     end
+    object Save1: TMenuItem
+      Caption = 'Save'
+      OnClick = Save1Click
+    end
   end
 end
