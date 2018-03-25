@@ -235,15 +235,16 @@ begin
             end;
           5:
             begin
-            HehID:=StrToInt(strngrd1.Cells[0,Arow]);
-            mode:=spr2;
-            writeSectList(strngrd1,sectorhead,shophead);
+            //HehID:=StrToInt(strngrd1.Cells[0,Arow]);
+           // mode:=spr2;
+            //writeSectList(strngrd1,sectorhead,shophead);
+            id:=StrToInt(strngrd1.Cells[0,Arow]);
+             deleteShopList(shophead,sectorhead,producthead,id);
+             writeshopList(strngrd1,shophead);
             end;
           6:
             begin
-              id:=StrToInt(strngrd1.Cells[0,Arow]);
-             deleteShopList(shophead,sectorhead,producthead,id);
-             writeshopList(strngrd1,shophead);
+
              end;
         end;
       end;
