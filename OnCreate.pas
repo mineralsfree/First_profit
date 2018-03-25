@@ -78,8 +78,8 @@ case mode of
     end;
   main:
     begin
-      prodlistkek.shopid:=StrToInt(InputBox('','','kek'));
-      prodlistkek.sectid:=StrToInt(InputBox('','','kek'));
+      prodlistkek.shopid:=StrToInt(InputBox('','','1'));
+      prodlistkek.sectid:=StrToInt(InputBox('','','1'));
       prodlistkek.Date:=StrToDate(InputBox('','','12.08.1488'));
       prodlistkek.VendorCode:=InputBox('','','kek');
       prodlistkek.Name:=InputBox('','','kek');
@@ -102,7 +102,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
 png: TPngImage;
 begin
-  kek:=0;
+
 png:= TPngImage(imgSplashIMG.Picture);
   Splash := TSplash.Create(png);
   Splash.Show(true);
@@ -112,8 +112,8 @@ png:= TPngImage(imgSplashIMG.Picture);
   createSectHead(sectorhead);
   createShopHead(shophead);
   mode:=main;
-  readShopFile(shophead);
-  readSectFile(sectorhead);
+ kek:=readShopFile(shophead);
+ HehID:=readSectFile(sectorhead);
   readProdFile(producthead);
   writeProdList(strngrd1,producthead,shophead,sectorhead);
 
@@ -222,13 +222,15 @@ begin
           4:
             begin
              //mode:=spr2;
+             Inc(hehid);
               id:=StrToInt(strngrd1.Cells[0,Arow]);
-             sectlistkek.id:=id;
+             sectlistkek.id:=HehID;
              sectlistkek.shopid:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.name:=InputBox('','','lol');
              sectlistkek.zav:=InputBox('','','privetlivaya');
              sectlistkek.tel:=InputBox('','','37529235232');
              insertSectList(sectorhead,sectlistkek);
+
              //writeSectList(strngrd1,sectorhead,shophead);
             end;
           5:
@@ -268,7 +270,8 @@ begin
             end;
           4:
             begin
-              deleteSectList(sectorhead,producthead,HehID);
+              id:=StrToInt(strngrd1.Cells[0,Arow]);
+              deleteSectList(sectorhead,producthead,ID);
               writeSectList(strngrd1,sectorhead,shophead);
             end;
         end;
@@ -276,7 +279,7 @@ begin
       main:
         begin
           case Acol of
-          4:
+          5:
             begin
              id2:=strngrd1.Cells[0,Arow];
              prodlistkek.shopid:=StrToInt(strngrd1.Cells[2,Arow]);
@@ -288,7 +291,7 @@ begin
              prodlistkek.Price:=StrToInt(strngrd1.Cells[6,Arow]);
              editProdList(producthead,id2,prodlistkek);
             end;
-          5:
+          6:
             begin
               id2:=strngrd1.Cells[0,Arow];
              prodlistkek.shopid:=StrToInt(strngrd1.Cells[2,Arow]);
@@ -300,9 +303,11 @@ begin
              prodlistkek.Price:=StrToInt(strngrd1.Cells[6,Arow]);
              editProdList(producthead,id2,prodlistkek);
             end;
-          6:
+          7:
             begin
-
+              id2:=strngrd1.Cells[0,Arow];
+              deleteProdList(producthead,id2);
+              writeProdList(strngrd1,producthead,shophead,sectorhead);
             end;
 
 
