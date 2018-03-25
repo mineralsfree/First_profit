@@ -54,7 +54,7 @@ procedure deleteShopList(const head: PShopList; SectHead: PSectorList; ProdHead:
 procedure writeShopList(Grid:TStringGrid; const head:PShopList);
 function isShopIDFound(head: PShopList; id: integer):boolean;
 procedure saveShopList(head:PShopList);
-procedure readShopFile(const head:PShopList);
+function readShopFile(const head:PShopList):integer;
 
 procedure createSectHead(var head: PSectorList);
 procedure insertSectList(const head: PSectorList; sect: TSectorInfo);
@@ -64,7 +64,7 @@ procedure deleteSectListKek(const head: PSectorList; ProdHead: PProductList; kek
 procedure writeSectList(Grid:TStringGrid; const head:PSectorList; ShopAdr:  PShopList);
 function isSectIDFound(head: PSectorList; id: integer):boolean;
 procedure saveSectList(head:PSectorList);
-procedure readSectFile(const head:PSectorList);
+function readSectFile(const head:PSectorList):integer;
 
 procedure createProdHead(var head: PProductList);
 procedure insertProdList(const head: PProductList; prod: TProductInfo);
@@ -551,7 +551,7 @@ begin
   close(F);
 end;
 
-procedure readShopFile(const head:PShopList);
+function readShopFile(const head:PShopList):integer;
 var
   f: file of TShopInfo;
   OTemp: PShopList;
@@ -571,7 +571,7 @@ begin
       OTemp^.adr:=nil;
 
       read(f, OTemp^.Inf);
-
+      result := OTemp^.Inf.id;
     end;
     close(f);
   end
@@ -584,7 +584,7 @@ begin
 end;
 
 
-procedure readSectFile(const head:PSectorList);
+function readSectFile(const head:PSectorList):integer;
 var
   f: file of TSectorInfo;
   OTemp: PSectorList;
@@ -604,7 +604,7 @@ begin
       OTemp^.adr:=nil;
 
       read(f, OTemp^.Inf);
-
+      result := OTemp^.Inf.id;
     end;
     close(f);
   end
