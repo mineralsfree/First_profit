@@ -78,9 +78,26 @@ case mode of
     end;
   main:
     begin
-      prodlistkek.shopid:=StrToInt(InputBox('','','1'));
+      try
+        prodlistkek.shopid:=StrToInt(InputBox('','','1'));
+
+      except
+              on E:Exception do
+              ShowMessage('Wrong input');
+
+             end;
+      try
       prodlistkek.sectid:=StrToInt(InputBox('','','1'));
-      prodlistkek.Date:=StrToDate(InputBox('','','12.08.1488'));
+       except
+              on E:Exception do
+              ShowMessage('Wrong input');
+             end;
+       try
+       prodlistkek.Date:=StrToDate(InputBox('','','12.08.1488'));
+         except
+              on E:Exception do
+              ShowMessage('Wrong input');
+             end;
       prodlistkek.VendorCode:=InputBox('','','kek');
       prodlistkek.Name:=InputBox('','','kek');
       prodlistkek.Count:=StrToInt(InputBox('','','2'));
@@ -181,9 +198,11 @@ procedure TForm1.strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
    var getShopID:Integer;
    var id: Integer;
    var id2:string;
+   var flag:Boolean;
 
 begin
   strngrd1.MouseToCell(X,Y,Acol,Arow);
+  flag:=False;
   if Arow<>0 then
   begin
 
@@ -224,23 +243,17 @@ begin
             end;
           4:
             begin
-             //mode:=spr2;
-             Inc(hehid);
               id:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.id:=HehID;
              sectlistkek.shopid:=StrToInt(strngrd1.Cells[0,Arow]);
-             sectlistkek.name:=InputBox('','','lol');
-             sectlistkek.zav:=InputBox('','','privetlivaya');
-             sectlistkek.tel:=InputBox('','','37529235232');
+             sectlistkek.name:=InputBox('sectname','','lol');
+             sectlistkek.zav:=InputBox('sectzav','','privetlivaya');
+             sectlistkek.tel:=InputBox('sectTel','','+37529235232');
              insertSectList(sectorhead,sectlistkek);
-
-             //writeSectList(strngrd1,sectorhead,shophead);
+              Inc(hehid);
             end;
           5:
             begin
-            //HehID:=StrToInt(strngrd1.Cells[0,Arow]);
-           // mode:=spr2;
-            //writeSectList(strngrd1,sectorhead,shophead);
             id:=StrToInt(strngrd1.Cells[0,Arow]);
              deleteShopList(shophead,sectorhead,producthead,id);
              writeshopList(strngrd1,shophead);
@@ -266,6 +279,7 @@ begin
             end;
           2:
             begin
+
             id:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.tel:=inputbox('','','37529235232');
              sectlistkek.zav:=strngrd1.Cells[1,Arow];
@@ -290,19 +304,18 @@ begin
           case Acol of
           5:
             begin
+
              id2:=strngrd1.Cells[0,Arow];
              prodlistkek.shopid:=StrToInt(strngrd1.Cells[2,Arow]);
              prodlistkek.sectid:=StrToInt(strngrd1.Cells[3,Arow]);
-             //MyClass := TComponent.Create(Self);
+             repeat
              try
               prodlistkek.Date:=StrToDate(InputBox('','','12.02.1243'));
               except
               on E:Exception do
               ShowMessage('Wrong input');
-             //finally
-              // MyClass.Free;
              end;
-            // prodlistkek.Date:=StrToDate(InputBox('','','12.02.1243'));
+             until flag;
              prodlistkek.VendorCode:=id2;
              prodlistkek.Name:=strngrd1.Cells[1,Arow];
              prodlistkek.Count:=StrToInt(strngrd1.Cells[5,Arow]);
