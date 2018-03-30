@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   Caption = 'Form1'
   ClientHeight = 380
-  ClientWidth = 884
+  ClientWidth = 984
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -692,7 +692,7 @@ object Form1: TForm1
   object strngrd1: TStringGrid
     Left = 0
     Top = 32
-    Width = 876
+    Width = 985
     Height = 265
     ColCount = 7
     DefaultColWidth = 120
