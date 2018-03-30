@@ -334,7 +334,7 @@ end;
 
 function getShopID(head:PShopList; name:string):integer;
 var
-  tmp: PSectorList;
+  tmp: PShopList;
 begin
   tmp:= head;
   while tmp <> nil do
