@@ -56,6 +56,7 @@ function isShopIDFound(head: PShopList; id: integer):boolean;
 procedure saveShopList(head:PShopList);
 function readShopFile(const head:PShopList):integer;
 function getShopName(head: PShopList; id: integer):string;
+function getShopID(head:PShopList; name:string):integer;
 
 procedure createSectHead(var head: PSectorList);
 procedure insertSectList(const head: PSectorList; sect: TSectorInfo);
@@ -324,6 +325,23 @@ begin
     if tmp^.Inf.id = id then
     begin
       Result:= tmp^.Inf.name;
+      exit;
+    end;
+
+    tmp:= tmp^.Adr;
+  end;
+end;
+
+function getShopID(head:PShopList; name:string):integer;
+var
+  tmp: PSectorList;
+begin
+  tmp:= head;
+  while tmp <> nil do
+  begin
+    if tmp^.Inf.name = name then
+    begin
+      Result:= tmp^.Inf.id;
       exit;
     end;
 
