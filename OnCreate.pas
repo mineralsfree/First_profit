@@ -38,6 +38,7 @@ type
     procedure N1Click(Sender: TObject);
     procedure N21Click(Sender: TObject);
     procedure Save1Click(Sender: TObject);
+    //function GetProdCount:Integer;
       private
     { Private declarations }
   public
@@ -78,96 +79,16 @@ case mode of
     end;
   main:
     begin
-
-      repeat
-        flag:=True;
-        try
-        prodlistkek.shopid:=StrToInt(InputBox('Введите id магазина','ID:','1'));
-        except
-           on E:Exception do
-           begin
-           ShowMessage('Wrong input');
-           flag:=false;
-           end;
-
-        end;
-      until (flag);
-      repeat
-        flag:=True;
-        try
-        prodlistkek.sectid:=StrToInt(InputBox('Введите номер сектора','номер:','1'));
-        except
-           on E:Exception do
-           begin
-           ShowMessage('Wrong input');
-           flag:=false;
-           end;
-
-        end;
-      until (flag);
-      repeat
-        flag:=True;
-        try
-        prodlistkek.Date:=StrToDate(InputBox('введите Дату','Дата',DateToStr(GetTime)));
-        except
-           on E:Exception do
-           begin
-           ShowMessage('Wrong input');
-           flag:=false;
-           end;
-
-        end;
-      until (flag);
-      repeat
-        flag:=True;
-       prodlistkek.VendorCode:=InputBox('Введите артикул товара','артикул:',InttoStr(hehid));
-       if isProdIDFound(producthead,prodlistkek.VendorCode) then
-       begin
-       ShowMessage('Артикул занят');
-       flag:=False;
-       end;
-      until flag;
-
+      prodlistkek.shopid:=GetProdShopID(shophead);
+      prodlistkek.sectid:=GetProdsectID(sectorhead);
+      prodlistkek.Date:=GetProdDate;
+      prodlistkek.VendorCode:=GetProdVendor(producthead);
       prodlistkek.Name:=InputBox('Введите название товара','товар','майка');
-      repeat
-        flag:=True;
-        try
-        prodlistkek.Count:=StrToInt(InputBox('Введите количество товара','количество','2'));
-        except
-           on E:Exception do
-           begin
-           ShowMessage('Wrong input');
-           flag:=false;
-           end;
-
-        end;
-      until (flag);
-
-
-      repeat
-        flag:=True;
-        try
-        prodlistkek.Price:=StrToCurr(InputBox('введите цену за ед','цена','22,8'));
-        except
-           on E:Exception do
-           begin
-           ShowMessage('Wrong input');
-           flag:=false;
-           end;
-
-        end;
-      until (flag);
-
+      prodlistkek.Count:=GetProdCount;
+      prodlistkek.Price:=GetProdPrice;
       insertProdList(producthead,prodlistkek);
-      if isShopIDFound(shophead,prodlistkek.shopid)
-      and isSectIDFound(sectorhead,prodlistkek.sectid) then
-
-      writeProdList(strngrd1,producthead,shophead,sectorhead)
-      else
-        ShowMessage('sector or shop do not exsist');
-
+      writeProdList(strngrd1,producthead,shophead,sectorhead);
     end;
-
 end;
 end;
 
@@ -175,7 +96,6 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
 png: TPngImage;
 begin
-
 png:= TPngImage(imgSplashIMG.Picture);
   Splash := TSplash.Create(png);
   Splash.Show(true);
@@ -189,10 +109,7 @@ png:= TPngImage(imgSplashIMG.Picture);
  HehID:=readSectFile(sectorhead);
   readProdFile(producthead);
   writeProdList(strngrd1,producthead,shophead,sectorhead);
-
-
 end;
-
 
 procedure TForm1.N11Click(Sender: TObject);
 begin
@@ -200,8 +117,6 @@ begin
  writeshopList(strngrd1,shophead);
  btn1.Visible:=true;
 end;
-
-
 
 procedure TForm1.N1Click(Sender: TObject);
 begin
@@ -229,184 +144,146 @@ case mode of
           saveSectList(sectorhead);
           ShowMessage('sectorlist saved');
         end;
-
   main:
     begin
      saveProdList(producthead);
      ShowMessage('productlist saved');
     end;
-
 end;
 end;
-
-{procedure TForm1.N21Click(Sender: TObject);
-begin
-
-end; }
 
 procedure TForm1.strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
-   var i,Acol,Arow:Integer;
-   var shopNum,sectnum:Integer;
+   var shopNum,sectnum,id,i,Acol,Arow:Integer;
    var sectlistkek:TSectorInfo;
    var shoplistkek:TShopInfo;
    var prodlistkek:TProductInfo;
-   var getShopID:Integer;
-   var id: Integer;
    var id2:string;
    var flag:Boolean;
-
 begin
   strngrd1.MouseToCell(X,Y,Acol,Arow);
   flag:=False;
   if Arow<>0 then
   begin
-
-
     case mode of
      spr1:       //SHOPLIST
       begin
+      id:=StrToInt(strngrd1.Cells[0,Arow]);
+      shoplistkek.id:=id;
         case Acol of
           1:
-            begin
-              id:=StrToInt(strngrd1.Cells[0,Arow]);
-              shoplistkek.id:=id;                //red name
+            begin                //red name
              shoplistkek.name:=InputBox('Введите название магазина','Название:','kek');
              shoplistkek.adress:=strngrd1.Cells[2,Arow];
              shoplistkek.tel:=strngrd1.Cells[3,Arow];
-             editShopList(shophead,id,shoplistkek);
-             writeshopList(strngrd1,shophead);
             end;
           2:
-            begin
-              id:=StrToInt(strngrd1.Cells[0,Arow]);
-               shoplistkek.id:=id;                     //red adres
+            begin                    //red adres
               shoplistkek.name:=strngrd1.Cells[1,Arow];
               shoplistkek.adress:=InputBox('Введите адрес','Адрес:','Гикало, 4');
               shoplistkek.tel:=strngrd1.Cells[3,Arow];
-              editShopList(shophead,id,shoplistkek);
-               writeshopList(strngrd1,shophead);
             end;
           3:
-            begin
-             id:=StrToInt(strngrd1.Cells[0,Arow]);
-              shoplistkek.id:=id;                     //red telefon
+            begin                       //red telefon
               shoplistkek.name:=strngrd1.Cells[1,Arow];
               shoplistkek.adress:=strngrd1.Cells[2,Arow];
               shoplistkek.tel:=InputBox('Введите номер телефона','номер:','+375296836944');
-              editShopList(shophead,id,shoplistkek);
-              writeshopList(strngrd1,shophead);
             end;
           4:
             begin
-              id:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.id:=HehID;
              sectlistkek.shopid:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.name:=InputBox('Введите имя секора','имя:','Молочные продукты');
              sectlistkek.zav:=InputBox('Заведующий сектором','имя','Вася');
              sectlistkek.tel:=InputBox('Телефон','номер:','+37529235232');
              insertSectList(sectorhead,sectlistkek);
-              Inc(hehid);
+             Inc(hehid);
+             Exit;
             end;
           5:
             begin
-            id:=StrToInt(strngrd1.Cells[0,Arow]);
              deleteShopList(shophead,sectorhead,producthead,id);
              writeshopList(strngrd1,shophead);
+             exit
             end;
           6:
             begin
 
              end;
         end;
+        editShopList(shophead,id,shoplistkek);
+        writeshopList(strngrd1,shophead);
       end;
       spr2:
       begin
+      id:=StrToInt(strngrd1.Cells[0,Arow]);
         case Acol of
           1:
             begin
-             id:=StrToInt(strngrd1.Cells[0,Arow]);
-             sectlistkek.tel:=strngrd1.Cells[4,Arow];
+             sectlistkek.name:=inputbox('Введите имя','имя секции:','Мясная секция');
              sectlistkek.zav:=strngrd1.Cells[3,Arow];
-             //sectlistkek.zav:=strngrd1.Cells[3,Arow];\\
-
-             sectlistkek.name:=inputbox('Введите имя','имя секции:','kek');
-             editSectList(sectorhead,ID,sectlistkek);
-             writeSectList(strngrd1,sectorhead,shophead);
+             sectlistkek.tel:=strngrd1.Cells[4,Arow];
             end;
-          2:
+          3:
             begin
-
+             sectlistkek.name:=strngrd1.Cells[1,Arow];
+             sectlistkek.zav:=InputBox('Заведующий сектором','имя','Петя');
+             sectlistkek.tel:=strngrd1.Cells[4,Arow];
             end;
           4:
             begin
-            id:=StrToInt(strngrd1.Cells[0,Arow]);
-             sectlistkek.tel:=inputbox('Введите телефон','номер:','+37529235232');
-             sectlistkek.zav:=strngrd1.Cells[3,Arow];
              sectlistkek.name:=strngrd1.Cells[1,Arow];
-             editSectList(sectorhead,ID,sectlistkek);
-             writeSectList(strngrd1,sectorhead,shophead);
+             sectlistkek.zav:=strngrd1.Cells[3,Arow];
+             sectlistkek.tel:=inputbox('Введите телефон','номер:','+37529235232');
             end;
           5:
             begin
-              id:=StrToInt(strngrd1.Cells[0,Arow]);
               deleteSectList(sectorhead,producthead,ID);
               writeSectList(strngrd1,sectorhead,shophead);
+              Exit;
             end;
         end;
+        sectlistkek.shopid:=getShopID(shophead,strngrd1.Cells[2,Arow]);
+        editSectList(sectorhead,ID,sectlistkek);
+        writeSectList(strngrd1,sectorhead,shophead);
       end;
       main:
         begin
+          id2:=strngrd1.Cells[0,Arow];
           case Acol of
-          5:
+          4:
             begin
-
-             id2:=strngrd1.Cells[0,Arow];
-             prodlistkek.shopid:=StrToInt(strngrd1.Cells[2,Arow]);
-             prodlistkek.sectid:=StrToInt(strngrd1.Cells[3,Arow]);
-             repeat
-             try
-              prodlistkek.Date:=StrToDate(InputBox('Введите дату','дата:','12.02.1243'));
-              except
-              on E:Exception do
-              ShowMessage('Wrong input');
-             end;
-             until flag;
-             prodlistkek.VendorCode:=id2;
+             prodlistkek.Date:=GetProdDate;
              prodlistkek.Name:=strngrd1.Cells[1,Arow];
              prodlistkek.Count:=StrToInt(strngrd1.Cells[5,Arow]);
-             prodlistkek.Price:=StrToInt(strngrd1.Cells[6,Arow]);
-             editProdList(producthead,id2,prodlistkek);
+             prodlistkek.Price:=StrToCurr(strngrd1.Cells[6,Arow]);
             end;
-          6:
+          5:
             begin
-             id2:=strngrd1.Cells[0,Arow];
-             prodlistkek.shopid:=StrToInt(strngrd1.Cells[2,Arow]);
-             prodlistkek.sectid:=StrToInt(strngrd1.Cells[3,Arow]);
              prodlistkek.Date:=StrToDate(strngrd1.Cells[4,Arow]);
-             prodlistkek.VendorCode:=id2;
              prodlistkek.Name:=strngrd1.Cells[1,Arow];
-             prodlistkek.Count:=StrToInt(inputbox('Input Count','Count:','123'));
-             prodlistkek.Price:=StrToInt(strngrd1.Cells[6,Arow]);
-             editProdList(producthead,id2,prodlistkek);
+             prodlistkek.Count:=GetProdCount;
+             prodlistkek.Price:=StrToCurr(strngrd1.Cells[6,Arow]);
             end;
           7:
             begin
-            id2:=strngrd1.Cells[0,Arow];
             deleteProdList(producthead,id2);
-            writeProdList(strngrd1,producthead,shophead,sectorhead);
             end;
-
-
           end;
+          prodlistkek.shopid:=getShopID(shophead,strngrd1.Cells[2,Arow]);
+          prodlistkek.sectid:=getSectID(sectorhead,strngrd1.Cells[3,Arow]);
+          prodlistkek.VendorCode:=id2;
+          editProdList(producthead,id2,prodlistkek);
+           writeProdList(strngrd1,producthead,shophead,sectorhead);
         end;
     end;
   end
-  else
+  {else
   case Acol of
     0:
     begin
     sortProdList(producthead,ArtIDsort);
+    writeProdList(strngrd1,producthead,shophead,sectorhead);
     end;
     2:
     begin
@@ -416,8 +293,6 @@ begin
     begin
     sortProdList(producthead,SectIDsort);
     end;
-
-  end;
+  end;  }
 end;
-
 end.
