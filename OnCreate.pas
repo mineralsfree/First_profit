@@ -171,6 +171,7 @@ begin
       id:=StrToInt(strngrd1.Cells[0,Arow]);
       shoplistkek.id:=id;
         case Acol of
+          0:Exit;
           1:
             begin                //red name
              shoplistkek.name:=InputBox('Введите название магазина','Название:','kek');
@@ -218,12 +219,14 @@ begin
       begin
       id:=StrToInt(strngrd1.Cells[0,Arow]);
         case Acol of
+          0:Exit;
           1:
             begin
              sectlistkek.name:=inputbox('Введите имя','имя секции:','Мясная секция');
              sectlistkek.zav:=strngrd1.Cells[3,Arow];
              sectlistkek.tel:=strngrd1.Cells[4,Arow];
             end;
+          2: Exit;
           3:
             begin
              sectlistkek.name:=strngrd1.Cells[1,Arow];
@@ -251,6 +254,7 @@ begin
         begin
           id2:=strngrd1.Cells[0,Arow];
           case Acol of
+          0..3: Exit;
           4:
             begin
              prodlistkek.Date:=GetProdDate;
@@ -265,9 +269,17 @@ begin
              prodlistkek.Count:=GetProdCount;
              prodlistkek.Price:=StrToCurr(strngrd1.Cells[6,Arow]);
             end;
+          6:
+           begin
+             prodlistkek.Date:=StrToDate(strngrd1.Cells[4,Arow]);
+             prodlistkek.Name:=strngrd1.Cells[1,Arow];
+             prodlistkek.Count:=StrToInt(strngrd1.Cells[5,Arow]);
+             prodlistkek.Price:=GetProdPrice;
+            end;
           7:
             begin
             deleteProdList(producthead,id2);
+            Exit;
             end;
           end;
           prodlistkek.shopid:=getShopID(shophead,strngrd1.Cells[2,Arow]);
