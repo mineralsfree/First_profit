@@ -2,7 +2,7 @@ unit Spravochnik_1;
 
 interface
 uses
-  SysUtils, Vcl.Grids;
+  SysUtils, Vcl.Grids, Vcl.Dialogs;
 
 type
 TShopInfo = record
@@ -84,6 +84,14 @@ function ShopIDsort (r1, r2: TProductInfo): Boolean;
 function SectIDsort (r1, r2: TProductInfo): Boolean;
 function ArtIDsort (r1, r2: TProductInfo): Boolean;
 
+//Nikitos funct
+function GetProdCount:Integer;
+function GetProdPrice:Currency;
+function GetProdDate:TDate;
+function GetProdVendor(const producthead:PProductList):string;
+function GetProdsectID(const sectorhead:PSectorList):Integer;
+function GetProdShopID(const shophead:PShopList):Integer;
+function GetSectID(head:PSectorList; name:string):integer;
 
 implementation
 
@@ -335,6 +343,22 @@ end;
 function getShopID(head:PShopList; name:string):integer;
 var
   tmp: PShopList;
+begin
+  tmp:= head;
+  while tmp <> nil do
+  begin
+    if tmp^.Inf.name = name then
+    begin
+      Result:= tmp^.Inf.id;
+      exit;
+    end;
+
+    tmp:= tmp^.Adr;
+  end;
+end;
+function getSectID(head:PSectorList; name:string):integer;
+var
+  tmp: PSectorList;
 begin
   tmp:= head;
   while tmp <> nil do
@@ -691,6 +715,116 @@ begin
 
 end;
 
+function GetProdCount:Integer;
+var flag:Boolean;
+var prodlistkek:TProductInfo;
+begin
+      repeat
+        flag:=True;
+        try
+        Result:=StrToInt(InputBox('Введите количество товара','количество','2'));
+        except
+           on E:Exception do
+           begin
+           ShowMessage('Wrong input');
+           flag:=false;
+           end;
+
+        end;
+      until (flag);
+end;
+function  GetProdPrice:Currency;
+var flag:Boolean;
+begin
+      repeat
+        flag:=True;
+        try
+        Result:=StrToCurr(InputBox('введите цену за ед','цена','22,8'));
+        except
+           on E:Exception do
+           begin
+           ShowMessage('Wrong input');
+           flag:=false;
+           end;
+
+        end;
+      until (flag);
+end;
+function GetProdShopID(const shophead:PShopList):Integer;
+var flag:Boolean;
+begin
+      repeat
+        flag:=True;
+        try
+        Result:=StrToInt(InputBox('Введите id магазина','ID:','1'));
+        except
+           on E:Exception do
+           begin
+           ShowMessage('Wrong input');
+           flag:=false;
+           end;
+
+        end;
+        if not(isShopIDFound(shophead,Result)) then
+        begin
+        flag:=false;
+        ShowMessage('Нет такого магазина');
+        end;
+       until (flag);
+end;
+function GetProdDate:TDate;
+var flag:Boolean;
+begin
+      repeat
+        flag:=True;
+        try
+        Result:=StrToDate(InputBox('введите Дату','Дата',DateToStr(GetTime)));
+        except
+           on E:Exception do
+           begin
+           ShowMessage('Wrong input');
+           flag:=false;
+           end;
+
+        end;
+      until (flag);
+end;
+function GetProdsectID(const sectorhead:PSectorList):Integer;
+var flag:Boolean;
+begin
+       repeat
+        flag:=True;
+        try
+        Result:=StrToInt(InputBox('Введите номер сектора','номер:','1'));
+        except
+           on E:Exception do
+           begin
+           ShowMessage('Wrong input');
+           flag:=false;
+           end;
+
+        end;
+        if not(isSectIDFound(sectorhead,Result)) then
+        begin
+        flag:=false;
+        ShowMessage('Нет такой секции');
+        end;
+
+      until (flag);
+end;
+function GetProdVendor(const producthead:PProductList):string;
+var flag:Boolean;
+begin
+        repeat
+        flag:=True;
+       Result:=InputBox('Введите артикул товара','артикул:','1');
+       if isProdIDFound(producthead,Result) then
+       begin
+       ShowMessage('Артикул занят');
+       flag:=False;
+       end;
+      until flag;
+end;
 end.
 
 
