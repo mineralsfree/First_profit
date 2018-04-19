@@ -570,7 +570,7 @@ end;
 
 procedure saveShopList(head:PShopList);
 var
-  f: file of TShopInfo;
+  f: textfile;
   temp: PShopList;
 begin
   AssignFile(f, 'shops.brakh');
@@ -578,7 +578,11 @@ begin
   temp := head^.adr;
   while temp <> nil do
   begin
-    write(f, temp^.Inf);
+    writeln(f, temp^.Inf.id);
+    writeln(f, temp^.Inf.name);
+    writeln(f, temp^.Inf.adress);
+    writeln(f, temp^.Inf.tel);
+    //write(f, temp^.Inf);
     temp:=temp^.adr;
   end;
   close(F);
@@ -618,7 +622,7 @@ end;
 
 function readShopFile(const head:PShopList):integer;
 var
-  f: file of TShopInfo;
+  f: textfile;
   OTemp: PShopList;
   filename: string;
 begin
@@ -636,7 +640,10 @@ begin
       OTemp:=OTemp^.adr;
       OTemp^.adr:=nil;
 
-      read(f, OTemp^.Inf);
+      readln(f, Otemp^.Inf.id);
+      readln(f, Otemp^.Inf.name);
+      readln(f, Otemp^.Inf.adress);
+      readln(f, Otemp^.Inf.tel);
       result := OTemp^.Inf.id;
     end;
     close(f);
