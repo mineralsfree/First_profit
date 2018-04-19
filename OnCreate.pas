@@ -79,6 +79,8 @@ case mode of
     end;
   main:
     begin
+      if (shophead.Adr<>nil)  and (sectorhead.Adr<>nil) then
+      begin
       prodlistkek.shopid:=GetProdShopID(shophead);
       prodlistkek.sectid:=GetProdsectID(sectorhead);
       prodlistkek.Date:=GetProdDate;
@@ -88,6 +90,7 @@ case mode of
       prodlistkek.Price:=GetProdPrice;
       insertProdList(producthead,prodlistkek);
       writeProdList(strngrd1,producthead,shophead,sectorhead);
+      end;
     end;
 end;
 end;
