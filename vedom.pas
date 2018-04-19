@@ -8,11 +8,22 @@ procedure formVedom2(Grid: TStringGrid; ProdHead:PProductList; ShopHead: PShopLi
 implementation
 
 procedure formVedom2(Grid: TStringGrid; ProdHead:PProductList; ShopHead: PShopList; SectHead: PSectorList);
+var
+  i: integer;
+  currnum: integer;
+  tmpProd: PProductList;
+  tmpShop: PShopList;
+  tmpSect: PSectorList;
+  kek: Boolean;
 begin
 
   Grid.ColCount := 9;
   Grid.RowCount := 2;
-  Grid.Cells[4,0] := 'Date: ' + FormatDateTime('dd.mm.yyyy"-"hh:nn:ss:zzz', Now);
+  for i := 0 to Grid.ColCount-1 do
+    Grid.Cells[i,0] := '';
+
+  Grid.Cells[4,0] := 'Date: ';
+  Grid.Cells[5,0] :=  FormatDateTime('dd.mm.yyyy"-"hh:nn:ss', Now);
   Grid.Cells[0,1] := 'Num p/p';
   Grid.Cells[1,1] := 'Shop ID';
   Grid.Cells[2,1] := 'Shop Name';
@@ -23,9 +34,48 @@ begin
   Grid.Cells[7,1] := 'Count';
   Grid.Cells[8,1] := 'Price';
 
+  currnum := 1;
 
- // Grid.Cells[6,0] := 'Delete';
-  //ShowMessage('kek');
+  tmpShop:= ShopHead^.Adr;
+  while tmpShop <> nil do
+  begin
+    tmpSect := SectHead^.Adr;
+    while tmpSect <> nil do
+    begin
+      kek := false;
+      tmpProd := ProdHead.Adr;
+      while tmpProd <> nil do
+      begin
+        if (tmpProd.Inf.shopid = tmpShop.Inf.id) and (tmpProd.Inf.sectid = tmpSect.Inf.id) then
+        begin
+          Grid.Cells[0,Grid.RowCount  - 1] := IntToStr(currnum);
+          Grid.Cells[1,Grid.RowCount  - 1] := IntToStr(tmpShop^.Inf.id) + 'kek';
+          Grid.Cells[2,Grid.RowCount  - 1] := tmpShop^.Inf.name;
+          Grid.Cells[3,Grid.RowCount  - 1] := tmpSect^.Inf.name;
+          Grid.Cells[4,Grid.RowCount  - 1] := IntToStr( tmpSect^.Inf.id );
+          Grid.Cells[5,Grid.RowCount  - 1] := tmpProd^.Inf.VendorCode;
+          Grid.Cells[6,Grid.RowCount  - 1] := tmpProd^.Inf.Name;
+          Grid.Cells[7,Grid.RowCount  -1] := IntToStr( tmpProd^.Inf.Count );
+          Grid.Cells[8,Grid.RowCount  - 1] := CurrToStr( (tmpProd^.Inf.Price)*(tmpProd^.Inf.Count) );
+          kek := true;
+          inc(currnum);
+          Grid.RowCount := Grid.RowCount + 1;
+        end;
+        tmpProd := tmpProd^.Adr;
+      end;
+      tmpSect := tmpSect^.Adr;
+      if kek then     
+      begin
+        Grid.RowCount := Grid.RowCount + 1;
+        for i := 0 to Grid.ColCount-1 do
+          Grid.Cells[i,Grid.RowCount-2] := '';
+      end;
+    end;
+    tmpShop := tmpShop^.Adr;
+  end;
+
+
+
  { temp := head^.adr;
   while temp <> nil do
   begin
