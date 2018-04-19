@@ -17,6 +17,7 @@ var
   kek: Boolean;
   sectPrice: Currency;
   shopPrice: Currency;
+  totalPrice: Currency;
 begin
 
   Grid.ColCount := 9;
@@ -37,7 +38,7 @@ begin
   Grid.Cells[8,1] := 'Price';
 
   currnum := 1;
-
+  totalPrice := 0;
   tmpShop:= ShopHead^.Adr;
   while tmpShop <> nil do
   begin
@@ -87,9 +88,11 @@ begin
       Grid.Cells[4,Grid.RowCount-2] := 'At shop ';
       Grid.Cells[5,Grid.RowCount-2] := CurrToStr(shopPrice);
     end;
+    totalPrice := totalPrice + shopPrice;
     tmpShop := tmpShop^.Adr;
   end;
-  Grid.RowCount := Grid.RowCount - 1;
+  Grid.Cells[4,Grid.RowCount-1] := 'Total ';
+  Grid.Cells[5,Grid.RowCount-1] := CurrToStr(totalPrice);
 
 
 
