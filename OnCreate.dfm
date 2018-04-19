@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 0
-  Top = 0
+  Left = 8
+  Top = 8
   Caption = 'Form1'
   ClientHeight = 380
   ClientWidth = 984
@@ -725,6 +725,13 @@ object Form1: TForm1
     object Save1: TMenuItem
       Caption = 'Save'
       OnClick = Save1Click
+    end
+    object N12: TMenuItem
+      Caption = #1042#1077#1076#1086#1084#1086#1089#1090#1100'_1'
+    end
+    object N22: TMenuItem
+      Caption = #1042#1077#1076#1086#1084#1086#1089#1090#1100'_2'
+      OnClick = N22Click
     end
   end
 end

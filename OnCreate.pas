@@ -30,6 +30,8 @@ type
     btn1: TButton;
     N21: TMenuItem;
     Save1: TMenuItem;
+    N12: TMenuItem;
+    N22: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
@@ -38,6 +40,7 @@ type
     procedure N1Click(Sender: TObject);
     procedure N21Click(Sender: TObject);
     procedure Save1Click(Sender: TObject);
+    procedure N22Click(Sender: TObject);
     //function GetProdCount:Integer;
       private
     { Private declarations }
@@ -133,6 +136,11 @@ begin
  mode:=spr2;
  writeSectList(strngrd1,sectorhead,shophead);
  btn1.Visible:=False;
+end;
+
+procedure TForm1.N22Click(Sender: TObject);
+begin
+formVedom2(strngrd1,producthead,shophead,sectorhead,);
 end;
 
 procedure TForm1.Save1Click(Sender: TObject);
