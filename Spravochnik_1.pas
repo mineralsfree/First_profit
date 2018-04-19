@@ -92,8 +92,13 @@ function GetProdVendor(const producthead:PProductList):string;
 function GetProdsectID(const sectorhead:PSectorList):Integer;
 function GetProdShopID(const shophead:PShopList):Integer;
 function GetSectID(head:PSectorList; name:string):integer;
-
+function top12(r1, r2: TProductInfo): Boolean;
 implementation
+
+function top12(r1, r2: TProductInfo): Boolean;
+begin
+  Result:= r1.Name > r2.Name;
+end;
 
 procedure createShopHead(var head: PShopList);
 begin

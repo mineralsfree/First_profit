@@ -32,6 +32,7 @@ type
     Save1: TMenuItem;
     N12: TMenuItem;
     N22: TMenuItem;
+    btn2: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
@@ -41,6 +42,8 @@ type
     procedure N21Click(Sender: TObject);
     procedure Save1Click(Sender: TObject);
     procedure N22Click(Sender: TObject);
+    procedure N12Click(Sender: TObject);
+    procedure btn2Click(Sender: TObject);
     //function GetProdCount:Integer;
       private
     { Private declarations }
@@ -72,13 +75,13 @@ begin
 case mode of
   spr1:
     begin
+          inc(kek);
          shoplistkek.id:=kek;
          shoplistkek.name:=InputBox('','','Магазин_'+IntToStr(kek));
          shoplistkek.adress:=InputBox('','','платонова');
          shoplistkek.tel:=InputBox('','','+37529235232');
          insertShopList(shophead,shoplistkek);
          writeShopList(strngrd1,shophead);
-         inc(kek);
     end;
   main:
     begin
@@ -95,6 +98,26 @@ case mode of
       writeProdList(strngrd1,producthead,shophead,sectorhead);
       end;
     end;
+end;
+end;
+
+procedure TForm1.btn2Click(Sender: TObject);
+begin
+case mode of
+  spr1:
+  begin
+
+  end;
+  spr2:
+  begin
+  //sortsect
+  end;
+  main:
+  begin
+  sortProdList(producthead,top12);
+  writeProdList(strngrd1,producthead,shophead,sectorhead);
+  end;
+
 end;
 end;
 
@@ -124,6 +147,11 @@ begin
  btn1.Visible:=true;
 end;
 
+procedure TForm1.N12Click(Sender: TObject);
+begin
+formVedom2(strngrd1,producthead,shophead,sectorhead);
+end;
+
 procedure TForm1.N1Click(Sender: TObject);
 begin
 mode:=main;
@@ -140,7 +168,7 @@ end;
 
 procedure TForm1.N22Click(Sender: TObject);
 begin
-formVedom2(strngrd1,producthead,shophead,sectorhead,);
+//formVedom1(strngrd1,producthead,shophead,sectorhead);
 end;
 
 procedure TForm1.Save1Click(Sender: TObject);

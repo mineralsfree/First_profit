@@ -709,6 +709,15 @@ object Form1: TForm1
     TabOrder = 1
     OnClick = btn1Click
   end
+  object btn2: TButton
+    Left = 32
+    Top = 329
+    Width = 75
+    Height = 25
+    Caption = 'Sort'
+    TabOrder = 2
+    OnClick = btn2Click
+  end
   object mm1: TMainMenu
     object N11: TMenuItem
       Caption = #1057#1087#1088#1072#1074#1086#1095#1085#1080#1082'_1'
@@ -728,6 +737,7 @@ object Form1: TForm1
     end
     object N12: TMenuItem
       Caption = #1042#1077#1076#1086#1084#1086#1089#1090#1100'_1'
+      OnClick = N12Click
     end
     object N22: TMenuItem
       Caption = #1042#1077#1076#1086#1084#1086#1089#1090#1100'_2'
