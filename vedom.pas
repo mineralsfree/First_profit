@@ -3,6 +3,8 @@ unit vedom;
 interface
 uses
   SysUtils, Vcl.Grids, Vcl.Dialogs,Spravochnik_1, DateUtils;
+procedure formVedom2(Grid: TStringGrid; ProdHead:PProductList; ShopHead: PShopList; SectHead: PSectorList);
+
 implementation
 
 procedure formVedom2(Grid: TStringGrid; ProdHead:PProductList; ShopHead: PShopList; SectHead: PSectorList);
