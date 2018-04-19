@@ -15,10 +15,12 @@ var
   tmpShop: PShopList;
   tmpSect: PSectorList;
   kek: Boolean;
+  sectPrice: Currency;
+  shopPrice: Currency;
 begin
 
   Grid.ColCount := 9;
-  Grid.RowCount := 2;
+  Grid.RowCount := 3;
   for i := 0 to Grid.ColCount-1 do
     Grid.Cells[i,0] := '';
 
@@ -40,9 +42,11 @@ begin
   while tmpShop <> nil do
   begin
     tmpSect := SectHead^.Adr;
+    shopPrice := 0;
     while tmpSect <> nil do
     begin
       kek := false;
+      sectPrice := 0;
       tmpProd := ProdHead.Adr;
       while tmpProd <> nil do
       begin
@@ -57,6 +61,7 @@ begin
           Grid.Cells[6,Grid.RowCount  - 1] := tmpProd^.Inf.Name;
           Grid.Cells[7,Grid.RowCount  -1] := IntToStr( tmpProd^.Inf.Count );
           Grid.Cells[8,Grid.RowCount  - 1] := CurrToStr( (tmpProd^.Inf.Price)*(tmpProd^.Inf.Count) );
+          sectPrice := sectPrice + (tmpProd^.Inf.Price)*(tmpProd^.Inf.Count);
           kek := true;
           inc(currnum);
           Grid.RowCount := Grid.RowCount + 1;
@@ -64,15 +69,27 @@ begin
         tmpProd := tmpProd^.Adr;
       end;
       tmpSect := tmpSect^.Adr;
-      if kek then     
+      if kek then
       begin
         Grid.RowCount := Grid.RowCount + 1;
         for i := 0 to Grid.ColCount-1 do
           Grid.Cells[i,Grid.RowCount-2] := '';
+        Grid.Cells[4,Grid.RowCount-2] := 'At sector ';
+        Grid.Cells[5,Grid.RowCount-2] := CurrToStr(sectPrice);
       end;
+      shopPrice := shopPrice + sectPrice;
+    end;
+    if shopPrice <> 0 then
+    begin
+      Grid.RowCount := Grid.RowCount + 1;
+      for i := 0 to Grid.ColCount-1 do
+        Grid.Cells[i,Grid.RowCount-2] := '';
+      Grid.Cells[4,Grid.RowCount-2] := 'At shop ';
+      Grid.Cells[5,Grid.RowCount-2] := CurrToStr(shopPrice);
     end;
     tmpShop := tmpShop^.Adr;
   end;
+  Grid.RowCount := Grid.RowCount - 1;
 
 
 
