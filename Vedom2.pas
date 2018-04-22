@@ -2,9 +2,8 @@ unit Vedom2;
 
 interface
 uses
-  SysUtils, Vcl.Grids, Vcl.Dialogs,Spravochnik_1, DateUtils,VCLTee.Chart;
+  SysUtils, Vcl.Grids, Vcl.Dialogs,Spravochnik_1, DateUtils,VCLTee.Chart,Vcl.ColorGrd,FMX.Colors, Vcl.Graphics;
 procedure formVedom1(cht1:Tchart;Grid: TStringGrid; ProdHead:PProductList; ShopHead: PShopList; SectHead: PSectorList; id:integer);
-
 implementation
 
 procedure formVedom1(cht1:Tchart;Grid: TStringGrid; ProdHead:PProductList; ShopHead: PShopList; SectHead: PSectorList; id:Integer);
@@ -19,6 +18,7 @@ var
   shopPrice: Currency;
   totalPrice: Currency;
 begin
+cht1.Visible:=True;
   tmpProd:=ProdHead;
     for i := 0 to Grid.ColCount do
     for j := 0 to Grid.RowCount do
@@ -40,6 +40,8 @@ begin
 
     tmpSect := SectHead^.Adr;
     shopPrice := 0;
+    cht1.Series[0].Clear;
+
 
     while tmpSect <> nil  do
     begin
@@ -54,18 +56,6 @@ begin
       begin
         if (tmpProd.Inf.shopid = id) and (tmpProd.Inf.sectid = tmpSect.Inf.id) then
         begin
-
-                {  Grid.Cells[1,0] := 'Ведомость 2' ;
-          Grid.ColCount := 6;
-          Grid.RowCount := 3;
-          Grid.Cells[1,1] := '№ п/п';
-          Grid.Cells[2,1] := 'Shop id';
-          Grid.Cells[3,1] := 'Sect';
-          Grid.Cells[4,1] := 'tel num';
-          Grid.Cells[5,1] := 'Profit';
-          Grid.Cells[2,2] := IntToStr(id);}
-
-         // Grid.Cells[4,Grid.RowCount  - 1] := CurrToStr( (tmpProd^.Inf.Price)*(tmpProd^.Inf.Count) );
           sectPrice := sectPrice + (tmpProd^.Inf.Price)*(tmpProd^.Inf.Count);
           kek := true;
         end;
@@ -73,7 +63,12 @@ begin
       end;
       if kek then
       begin
-         cht1.Series[0].Add((sectPrice*1.0),'sectprice',Random(100000));
+      cht1.series[0].Active:=true;
+      cht1.SeriesList.Create;
+      cht1.series[0].Add(sectPrice, IntToStr(currnum));
+
+      cht1.Series[0].Repaint;
+
       Grid.Cells[4,Grid.RowCount-1] := CurrToStr(sectprice);
       Grid.RowCount := Grid.RowCount + 1;
       inc(currnum);

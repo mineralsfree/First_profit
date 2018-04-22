@@ -32,7 +32,6 @@ type
     N21: TMenuItem;
     Save1: TMenuItem;
     N12: TMenuItem;
-    N22: TMenuItem;
     btn2: TButton;
     cht1: TChart;
     psrsSeries1: TPieSeries;
@@ -119,6 +118,7 @@ case mode of
   begin
   sortProdList(producthead,top12);
   writeProdList(strngrd1,producthead,shophead,sectorhead);
+  cht1.Visible:=False;
   end;
 
 end;
@@ -128,6 +128,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
 png: TPngImage;
 begin
+
 png:= TPngImage(imgSplashIMG.Picture);
   Splash := TSplash.Create(png);
   Splash.Show(true);
@@ -141,6 +142,7 @@ png:= TPngImage(imgSplashIMG.Picture);
  HehID:=readSectFile(sectorhead);
   readProdFile(producthead);
   writeProdList(strngrd1,producthead,shophead,sectorhead);
+  cht1.Visible:=False;
 end;
 
 procedure TForm1.N11Click(Sender: TObject);
@@ -148,17 +150,20 @@ begin
  mode:=spr1;
  writeshopList(strngrd1,shophead);
  btn1.Visible:=true;
+ cht1.Visible:=False;
 end;
 
 procedure TForm1.N12Click(Sender: TObject);
 begin
 formVedom2(strngrd1,producthead,shophead,sectorhead);
+cht1.Visible:=False;
 end;
 
 procedure TForm1.N1Click(Sender: TObject);
 begin
 mode:=main;
 writeProdList(strngrd1,producthead,shophead,sectorhead);
+cht1.Visible:=False;
 btn1.Visible:=true;
 end;
 
@@ -166,6 +171,7 @@ procedure TForm1.N21Click(Sender: TObject);
 begin
  mode:=spr2;
  writeSectList(strngrd1,sectorhead,shophead);
+ cht1.Visible:=False;
  btn1.Visible:=False;
 end;
 
