@@ -699,6 +699,14 @@ object Form1: TForm1
     RowCount = 2
     TabOrder = 0
     OnMouseUp = strngrd1MouseUp
+    ColWidths = (
+      120
+      120
+      120
+      120
+      120
+      120
+      120)
   end
   object btn1: TButton
     Left = 746
@@ -755,10 +763,7 @@ object Form1: TForm1
       Frame.OuterBrush.Gradient.Visible = True
       Frame.Width = 4
       OtherSlice.Legend.Visible = False
-      Data = {
-        00080000000000000000F07E4000000000004064400000000000508E40000000
-        0000588940000000000028824000000000004068400000000000805B40000000
-        0000B07540}
+      Data = {0000000000}
       Detail = {0000000000}
     end
   end
@@ -782,10 +787,6 @@ object Form1: TForm1
     object N12: TMenuItem
       Caption = #1042#1077#1076#1086#1084#1086#1089#1090#1100'_1'
       OnClick = N12Click
-    end
-    object N22: TMenuItem
-      Caption = #1042#1077#1076#1086#1084#1086#1089#1090#1100'_2'
-      OnClick = N22Click
     end
   end
 end
