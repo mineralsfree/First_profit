@@ -5,7 +5,8 @@ interface
 uses
    Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls,  Vcl.Forms,pngimage, Vcl.Dialogs, Vcl.ExtCtrls, SplashScreen, Vcl.StdCtrls, ComObj,  Vcl.Grids,
-  Vcl.Menus, Spravochnik_1,vedom,Vedom2;
+  Vcl.Menus, Spravochnik_1,vedom,Vedom2, VclTee.TeeGDIPlus, VCLTee.TeEngine,
+  VCLTee.Series, VCLTee.TeeProcs, VCLTee.Chart;
 
 type
    Tmode = (spr1, spr2, ved1, ved2, main);
@@ -33,6 +34,8 @@ type
     N12: TMenuItem;
     N22: TMenuItem;
     btn2: TButton;
+    cht1: TChart;
+    psrsSeries1: TPieSeries;
     procedure FormCreate(Sender: TObject);
     procedure btn1Click(Sender: TObject);
     procedure strngrd1MouseUp(Sender: TObject; Button: TMouseButton;
@@ -231,13 +234,14 @@ begin
             end;
           4:
             begin
+            Inc(hehid);
              sectlistkek.id:=HehID;
              sectlistkek.shopid:=StrToInt(strngrd1.Cells[0,Arow]);
              sectlistkek.name:=InputBox('Введите имя секора','имя:','Молочные продукты');
              sectlistkek.zav:=InputBox('Заведующий сектором','имя','Вася');
              sectlistkek.tel:=InputBox('Телефон','номер:','+37529235232');
              insertSectList(sectorhead,sectlistkek);
-             Inc(hehid);
+
              Exit;
             end;
           5:
@@ -248,7 +252,9 @@ begin
             end;
           6:
             begin
-
+             formVedom1(cht1,strngrd1,producthead,shophead,sectorhead,id);
+             mode:=ved1;
+             exit;
              end;
         end;
         editShopList(shophead,id,shoplistkek);

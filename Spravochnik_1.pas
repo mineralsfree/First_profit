@@ -382,7 +382,7 @@ procedure writeShopList(Grid:TStringGrid; const head:PShopList);
 var
   temp:PShopList;
 begin
-  Grid.ColCount := 6  ;
+  Grid.ColCount := 7;
   Grid.RowCount := 2;
   Grid.Cells[0,0] := 'ID';
   Grid.Cells[1,0] := 'Name';
@@ -390,6 +390,7 @@ begin
   Grid.Cells[3,0] := 'number';
   Grid.Cells[4,0] := 'add';
   Grid.Cells[5,0] := 'Delete';
+  Grid.Cells[6,0] := 'ведомость';
  // Grid.Cells[6,0] := 'Delete';
   //ShowMessage('kek');
   temp := head^.adr;
@@ -401,7 +402,7 @@ begin
     Grid.Cells[3,Grid.RowCount - 1] := temp^.Inf.tel;
     Grid.Cells[4,Grid.RowCount - 1] := '+';
     Grid.Cells[5,Grid.RowCount - 1] := '-';
-    Grid.Cells[6,Grid.RowCount - 1] := '';
+    Grid.Cells[6,Grid.RowCount - 1] := 'сформировать';
     temp:=temp^.adr;
     Grid.RowCount := Grid.RowCount + 1;
   end;
