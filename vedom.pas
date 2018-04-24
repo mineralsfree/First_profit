@@ -54,7 +54,7 @@ begin
         if (tmpProd.Inf.shopid = tmpShop.Inf.id) and (tmpProd.Inf.sectid = tmpSect.Inf.id) then
         begin
           Grid.Cells[0,Grid.RowCount  - 1] := IntToStr(currnum);
-          Grid.Cells[1,Grid.RowCount  - 1] := IntToStr(tmpShop^.Inf.id) + 'kek';
+          Grid.Cells[1,Grid.RowCount  - 1] := IntToStr(tmpShop^.Inf.id);
           Grid.Cells[2,Grid.RowCount  - 1] := tmpShop^.Inf.name;
           Grid.Cells[3,Grid.RowCount  - 1] := tmpSect^.Inf.name;
           Grid.Cells[4,Grid.RowCount  - 1] := IntToStr( tmpSect^.Inf.id );
