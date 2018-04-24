@@ -63,7 +63,6 @@ begin
           Grid.Cells[7,Grid.RowCount  -1] := IntToStr( tmpProd^.Inf.Count );
           Grid.Cells[8,Grid.RowCount  - 1] := CurrToStr( (tmpProd^.Inf.Price)*(tmpProd^.Inf.Count) );
           sectPrice := sectPrice + (tmpProd^.Inf.Price)*(tmpProd^.Inf.Count);
-          kek := true;
           inc(currnum);
           Grid.RowCount := Grid.RowCount + 1;
         end;
@@ -93,24 +92,6 @@ begin
   end;
   Grid.Cells[4,Grid.RowCount-1] := 'Total ';
   Grid.Cells[5,Grid.RowCount-1] := CurrToStr(totalPrice);
-
-
-
- { temp := head^.adr;
-  while temp <> nil do
-  begin
-    Grid.Cells[0,Grid.RowCount - 1] := IntToStr(temp^.Inf.id);
-    Grid.Cells[1,Grid.RowCount - 1] := temp^.Inf.name;
-    Grid.Cells[2,Grid.RowCount - 1] := temp^.Inf.adress;
-    Grid.Cells[3,Grid.RowCount - 1] := temp^.Inf.tel;
-    Grid.Cells[4,Grid.RowCount - 1] := '+';
-    Grid.Cells[5,Grid.RowCount - 1] := '-';
-    Grid.Cells[6,Grid.RowCount - 1] := '';
-    temp:=temp^.adr;
-    Grid.RowCount := Grid.RowCount + 1;
-  end;
-  Grid.RowCount := Grid.RowCount - 1;
-  }
 end;
 
 end.

@@ -132,7 +132,7 @@ begin
 png:= TPngImage(imgSplashIMG.Picture);
   Splash := TSplash.Create(png);
   Splash.Show(true);
-  Sleep(200);
+  Sleep(2000);
   Splash.Close;
   createProdHead(producthead);
   createSectHead(sectorhead);
